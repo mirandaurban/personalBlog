@@ -5,7 +5,7 @@ Todo lo comparto con mucho cariño y con ganas de compartirle al mundo un poco d
 **¿Qué vas a encontrar?**
 - Reseñas y resumenes de los libros que he leído
 - Recomendaciones
-- Sección “TBR” (To Be Read)
+- Sección "TBR" (To Be Read)
 - (Próximamente) opiniones, tips, y más
 
 ---
@@ -30,25 +30,29 @@ Puedes compartir mis textos con atribución y sin fines comerciales.
 
 ---
 
-## Estructura de archvios
-blog personal/                    # Raíz del repositorio
-├── .github/                      # Para workflows, ISSUE_TEMPLATE, etc.
-├── public/                       # Archivos estáticos
-│   ├── images/                   # Imágenes del blog
-├── src/                          # Todo el código fuente
-│   ├── components/               # Componentes reutilizables
-│   ├── content/                  # Posts y colecciones
-│   │   ├── blog/                 # Colección de reseñas/resúmenes
-│   ├── layouts/                  # Plantillas base para páginas
-│   ├── pages/                    # Rutas automáticas (filename = URL)
-│   │   ├── index.astro           # Home: lista de lecturas recientes, collage, intro
-│   │   ├── blog/                 # Carpeta para sección /blog
-│   │   │   ├── index.astro       # Lista de todos los posts (/blog)
-│   ├── styles/                   # CSS global o por página
-│   │   ├── global.css
-├── README.md                     
-├── LICENSE                       # MIT para código
-└── CONTENT-LICENSE.md            # CC para textos
+## Estructura de archivos
+
+```
+blog personal/
+├── .github/
+│   └── ISSUE_TEMPLATE/
+├── public/
+│   └── images/
+├── src/
+│   ├── components/
+│   ├── content/
+│   │   └── blog/
+│   ├── layouts/
+│   ├── pages/
+│   │   ├── index.astro
+│   │   └── blog/
+│   │       └── index.astro
+│   └── styles/
+│       └── global.css
+├── README.md
+├── LICENSE
+└── CONTENT-LICENSE.md
+```
 
 ---
 
@@ -57,3 +61,4 @@ blog personal/                    # Raíz del repositorio
 ```bash
 npm install
 npm run dev
+```
