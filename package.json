@@ -1,0 +1,26 @@
+{
+  "name": "personalblog",
+  "version": "1.0.0",
+  "description": "Mi blog personal de reseñas, opiniones y más. Aquí es posible experimentar el mundo a través de mi mente, te invito a leerlo.  Todo lo comparto con mucho cariño y con ganas de compartirle al mundo un poco de lo que encuentro valioso.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro dev build",
+    "preview": "astro preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mirandaurban/personalBlog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mirandaurban/personalBlog/issues"
+  },
+  "homepage": "https://github.com/mirandaurban/personalBlog#readme",
+  "dependencies": {
+    "astro": "^6.0.4"
+  }
+}
