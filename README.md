@@ -24,7 +24,7 @@ Todo lo comparto con mucho cariño y con ganas de compartirle al mundo un poco d
 - **Pull Requests**: siempre con descripción clara y pruebas locales (`npm run build`).
 
 **Licencias**  
-- Código fuente (Astro, componentes, estilos): **MIT License** (ver `LICENSE`).  
+- Código fuente (Astro, componentes, estilos): **MIT License** (ver `CODE-LICENSE`).  
 - Contenido (reseñas, textos, opiniones): **Creative Commons BY-NC-SA 4.0** (ver `CONTENT-LICENSE.md`).  
 Puedes compartir mis textos con atribución y sin fines comerciales.
 
@@ -33,7 +33,7 @@ Puedes compartir mis textos con atribución y sin fines comerciales.
 ## Estructura de archivos
 
 ```
-blog personal/
+personalBlog/
 ├── .github/
 │   └── ISSUE_TEMPLATE/
 ├── public/
