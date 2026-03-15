@@ -7,11 +7,11 @@ interface Props {
 const { genre, label } = Astro.props;
 
 const config = {
-  ficcion:   { bg: 'var(--blush)',    color: 'var(--ink)',   text: label ?? 'Ficción' },
+  ficcion:   { bg: 'var(--purple)',   color: 'var(--ink)',   text: label ?? 'Ficción' },
   ensayo:    { bg: 'var(--lavender)', color: 'var(--ink)',   text: label ?? 'Ensayo' },
-  poesia:    { bg: 'var(--butter)',   color: 'var(--ink)',   text: label ?? 'Poesía' },
-  filosofia: { bg: 'var(--sage)',     color: '#fff',       text: label ?? 'Filosofía' },
-  historia:  { bg: 'var(--teal)',     color: '#fff',       text: label ?? 'Historia' },
+  poesia:    { bg: 'var(--blush)',    color: 'var(--ink)',   text: label ?? 'Poesía' },
+  filosofia: { bg: 'var(--sage)',     color: 'var(--ink)',   text: label ?? 'Filosofía' },
+  historia:  { bg: 'var(--butter)',   color: 'var(--ink)',   text: label ?? 'Historia' },
   otro:      { bg: 'var(--cream)',    color: 'var(--ink)',   text: label ?? 'Otro' },
 };
 

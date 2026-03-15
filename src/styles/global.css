@@ -1,15 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Mono:wght@300;400&display=swap');
 
 :root {
-  --cream:     #F5F0E8;
-  --ink:       #1C1917;
-  --rust:      #C4502A;
-  --sage:      #7A9E7E;
-  --butter:    #E8C547;
-  --lavender:  #B8A9C9;
-  --blush:     #E8B4A0;
-  --teal:      #4A9B8E;
-  --midnight:  #25417d;
+  /* Base */
+  --cream:     #EDE8DF;
+  --ink:       #2C2C2A;
+
+  /* Acento principal — azul pizarra */
+  --rust:      #4A6278;
+
+  /* Tags */
+  --sage:      #7fad8e;   
+  --butter:    #E8C547;   
+  --lavender:  #8FA8C8; 
+  --purple:    #a491cb;
+  --blush:     #f2b5c8;  
+  --teal:      #3D7D72;
+
+  /* Otros colores */
+  --paleblue:  #b0c6e3;
+  --palegreen: #9bc4b2;
+  
+  /* UI de soporte */
+  --muted:     #C8C0B4;   /* bordes y metadatos */
+  --paper:     #F7F4EE;   /* fondo de cards y scrap */
 
   --font-display: 'Playfair Display', serif;
   --font-body:    'Fraunces', serif;
