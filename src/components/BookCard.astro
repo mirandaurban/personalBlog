@@ -1,0 +1,133 @@
+---
+import TagBadge from './TagBadge.astro';
+
+interface Props {
+  title: string;
+  author: string;
+  excerpt: string;
+  genre: 'ficcion' | 'ensayo' | 'poesia' | 'filosofia' | 'historia' | 'otro';
+  date: string;
+  readTime: string;
+  slug: string;
+  spineColor?: string;
+}
+
+const {
+  title,
+  author,
+  excerpt,
+  genre,
+  date,
+  readTime,
+  slug,
+  spineColor = 'var(--rust)',
+} = Astro.props;
+---
+
+<a href={`/lecturas/${slug}`} class="book-card">
+  <div class="book-spine" style={`background:${spineColor}`}>
+    {title}
+  </div>
+  <TagBadge genre={genre} />
+  <h3 class="book-title">{title}</h3>
+  <p class="book-author">{author}</p>
+  <p class="book-excerpt">{excerpt}</p>
+  <p class="book-meta">{date} · {readTime}</p>
+  <span class="read-arrow">↗</span>
+</a>
+
+<style>
+  .book-card {
+    display: block;
+    padding: 2rem;
+    border-right: var(--border);
+    border-bottom: var(--border);
+    position: relative;
+    transition: background 0.2s, color 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .book-card:hover {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  /* Override TagBadge border on hover */
+  .book-card:hover :global(.tag) {
+    border-color: var(--cream);
+    color: var(--cream);
+  }
+
+  .book-spine {
+    width: 44px;
+    height: 64px;
+    margin-bottom: 1.2rem;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.45rem;
+    writing-mode: vertical-rl;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: white;
+    padding: 0.3rem;
+    border: var(--border);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .book-title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0.8rem 0 0.3rem;
+  }
+
+  .book-author {
+    font-size: 0.85rem;
+    font-weight: 300;
+    font-style: italic;
+    margin-bottom: 1rem;
+  }
+
+  .book-excerpt {
+    font-size: 0.82rem;
+    line-height: 1.6;
+    font-weight: 300;
+    opacity: 0.8;
+    margin-bottom: 1.5rem;
+  }
+
+  .book-meta {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(28,25,23,0.4);
+    transition: color 0.2s;
+  }
+
+  .book-card:hover .book-meta {
+    color: rgba(245,240,232,0.5);
+  }
+
+  .read-arrow {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    font-size: 1.2rem;
+    opacity: 0.3;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .book-card:hover .read-arrow {
+    opacity: 1;
+    transform: translate(3px, -3px);
+  }
+</style>

@@ -1,0 +1,109 @@
+---
+import '../../src/styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Miranda Urban',
+  description = 'Apuntes y reflexiones sobre los libros que han cambiado algo en mí.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+
+    <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-48.png" sizes="48x48">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+    
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="nav-logo">Miranda Urban</a>
+      <ul class="nav-links">
+        <li><a href="/lecturas">Lecturas</a></li>
+        <li><a href="/notas">Notas</a></li>
+        <li><a href="/sobre-mi">Sobre mí</a></li>
+        <li><a href="/archivo">Archivo</a></li>
+      </ul>
+    </nav>
+
+    <slot />
+
+    <footer>
+      <span class="footer-logo">Miranda Urban</span>
+      <p class="footer-note">Hecho con café y mucho amor · {new Date().getFullYear()}</p>
+    </footer>
+  </body>
+</html>
+
+<style>
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    border-bottom: var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--cream);
+    z-index: 100;
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--rust); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: var(--border);
+  }
+
+  .footer-logo {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .footer-note {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: rgba(28,25,23,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+</style>

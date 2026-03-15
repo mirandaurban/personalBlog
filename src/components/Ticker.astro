@@ -1,0 +1,56 @@
+---
+interface Props {
+  items?: string[];
+  bg?: string;
+  color?: string;
+}
+
+const {
+  items = ['Ver con ojos nuevos lo conocido', 'Aprender para conectar y compartir', 'Enamorarse de no saber'],
+  bg = 'var(--midnight)',
+  color = 'white',
+} = Astro.props;
+
+const repeated = [...items, ...items]; // duplicate for seamless loop
+---
+
+<div class="ticker-wrap" style={`background:${bg}; color:${color};`}>
+  <div class="ticker-track">
+    {repeated.map((item) => (
+      <span class="ticker-item">
+        {item} <span class="sep">✦</span>
+      </span>
+    ))}
+  </div>
+</div>
+
+<style>
+  .ticker-wrap {
+    border-top: var(--border);
+    border-bottom: var(--border);
+    overflow: hidden;
+    padding: 0.6rem 0;
+  }
+
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    animation: ticker 24s linear infinite;
+  }
+
+  .ticker-item {
+    white-space: nowrap;
+    padding: 0 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .sep { opacity: 0.5; margin-left: 1rem; }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+</style>
