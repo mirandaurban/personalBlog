@@ -39,8 +39,15 @@ const {
     <slot />
 
     <footer>
-      <span class="footer-logo">Miranda Urban</span>
       <p class="footer-note">Hecho con café y mucho amor · {new Date().getFullYear()}</p>
+      <a
+        class="footer-cc"
+        href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es"
+        target="_blank"
+        rel="license noopener noreferrer"
+        title="Atribución-NoComercial-CompartirIgual 4.0 Internacional">
+        <span>CC BY-NC-SA 4.0 · Miranda Urban Solano</span>
+      </a>
     </footer>
   </body>
 </html>
@@ -105,5 +112,21 @@ const {
     color: rgba(28,25,23,0.4);
     text-transform: uppercase;
     letter-spacing: 0.08em;
+  }
+
+ .footer-cc {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: rgba(28,25,23,0.4);
+    text-decoration: none;
+    margin-top: 0.5rem;
+    transition: color 0.2s;
+  }
+
+  .footer-cc:hover,
+  .footer-cc:focus {
+    color: var(--rust);
+    text-decoration: underline;
   }
 </style>
