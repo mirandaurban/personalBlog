@@ -1,0 +1,212 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Sobre mí"
+  description="Pequeña introducción sobre mí, mi visión, y objetivo."
+>
+<!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="eyebrow">✦ Un poco sobre mí</p>
+      <h1 class="hero-title">
+        ¿Quién<br/><em>soy?</em>
+      </h1>
+      <p class="hero-bio">
+        ¡Hola, soy <strong>Miranda Urban</strong>! Aquí va a ir mi introducción.
+      </p>
+    </div>
+
+    <!-- INTRODUCTORY IMAGES -->
+    <div class="hero-right">
+      <div class="scrapbook">
+
+        <!-- Fotos -->
+        <div class="scrap scrap-1">
+          <img src="../../images/sobre-mi-1.jpeg" alt="Yo en Italia" />
+        </div>
+
+        <div class="scrap scrap-2">
+          <img src="../../images/sobre-mi-2.jpeg" alt="Selfie en el espejo" />
+        </div>
+
+        <div class="scrap scrap-3">
+          <img src="../../images/sobre-mi-3.jpeg" alt="Biblioteca del abuelo" />
+        </div>
+
+        <div class="scrap scrap-4">
+          <img src="../../images/sobre-mi-4.jpeg" alt="Biblioteca del abuelo" />
+        </div>
+
+        <!-- Nota manuscrita -->
+        <p class="handnote">es un placer conocerte!</p>
+
+        <!-- Sticker de año -->
+        <div class="sticker">2026 ✦</div>
+
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* ── HERO ── */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 88vh;
+    border-bottom: var(--border);
+  }
+
+  .hero-left {
+    padding: 4rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    border-right: var(--border);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust);
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 6vw, 6rem);
+    line-height: 1.0;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  .hero-bio {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    font-weight: 300;
+    max-width: 36ch;
+  }
+
+  /* ── SCRAPBOOK ── */
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+    background: var(--cream);
+  }
+
+  .scrapbook {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+  }
+
+  .scrap {
+    position: absolute;
+    background: var(--paper);
+    /* Borde estilo polaroid: más grueso abajo */
+    padding: 10px 10px 32px 10px;
+    box-shadow: 4px 6px 16px rgba(44,44,42,0.13);
+    overflow: hidden;
+  }
+
+  .scrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Fotos */
+  .scrap-1 {
+    width: 220px;
+    height: 270px;
+    top: 15%;
+    left: 10%;
+    rotate: -3deg;
+    z-index: 2;
+  }
+
+  .scrap-2 {
+    width: 190px;
+    height: 230px;
+    top: 16%;
+    left: 64%;
+    rotate: 4deg;
+    z-index: 3;
+  }
+
+  .scrap-3 {
+    width: 190px;
+    height: 230px;
+    top: 60%;
+    left: 16%;
+    rotate: 4deg;
+    z-index: 4;
+  }
+
+  .scrap-4 {
+    width: 220px;
+    height: 270px;
+    top: 57%;
+    left: 57%;
+    rotate: -3deg;
+    z-index: 2;
+  }
+
+  /* ── HANDNOTE ── */
+  .handnote {
+    position: absolute;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--rust);
+    top: 26%;
+    left: 42%;
+    rotate: -1deg;
+    z-index: 5;
+    max-width: 120px;
+  }
+
+  /* ── STICKER ── */
+  .sticker {
+    position: absolute;
+    bottom: 14%;
+    left: 8%;
+    padding: 0.35rem 0.9rem;
+    background: var(--sage);
+    color: white;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    border-radius: 999px;
+    rotate: -1.5deg;
+    z-index: 6;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .eyebrow   { animation: fadeUp 0.5s ease both; }
+  .hero-title { animation: fadeUp 0.5s ease 0.1s both; }
+  .hero-bio  { animation: fadeUp 0.5s ease 0.2s both; }
+  .scrap-1   { animation: fadeUp 0.6s ease 0.2s both; }
+  .scrap-2   { animation: fadeUp 0.6s ease 0.35s both; }
+  .handnote  { animation: fadeUp 0.5s ease 0.55s both; }
+  .sticker   { animation: fadeUp 0.4s ease 0.6s both; }
+</style>
