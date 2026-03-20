@@ -38,6 +38,7 @@ const {
 
     <footer>
       <p class="footer-note">Hecho con café y mucho amor · {new Date().getFullYear()}</p>
+      <a href="/terminos" class="footer-cc">Términos y condiciones</a>
       <a
         class="footer-cc"
         href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es"
@@ -98,18 +99,19 @@ const {
     border-top: var(--border);
   }
 
-  .footer-logo {
-    font-family: var(--font-display);
-    font-size: 0.9rem;
-    font-weight: 700;
-  }
-
   .footer-note {
     font-family: var(--font-mono);
     font-size: 0.65rem;
     color: rgba(28,25,23,0.4);
     text-transform: uppercase;
     letter-spacing: 0.08em;
+  }
+
+  .footer-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.3rem;
   }
 
  .footer-cc {
