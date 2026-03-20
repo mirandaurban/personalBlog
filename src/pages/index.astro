@@ -1,43 +1,39 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Ticker from '../components/Ticker.astro';
 import BookCard from '../components/BookCard.astro';
 import TagBadge from '../components/TagBadge.astro';
-
-// Cuando conectes Astro Content Collections, estos vendrán de ahí.
-// Por ahora los datos son estáticos para desarrollar el diseño.
-const recentBooks = [
-  {
-    title: 'Las olas',
-    author: 'Virginia Woolf',
-    excerpt: 'Hay libros que no se leen sino que se habitan. Woolf construye algo entre novela y poema que no te suelta.',
-    genre: 'ficcion' as const,
-    date: 'Marzo 2025',
-    readTime: '15 min',
-    slug: 'las-olas-woolf',
-    spineColor: 'var(--rust)',
-  },
-  {
-    title: 'Cómo vivir: Montaigne',
-    author: 'Sarah Bakewell',
-    excerpt: 'Una biografía que es también un manual de filosofía práctica. No leí a Montaigne, lo conocí.',
-    genre: 'ensayo' as const,
-    date: 'Febrero 2025',
-    readTime: '12 min',
-    slug: 'como-vivir-montaigne',
-    spineColor: 'var(--teal)',
-  },
-  {
-    title: 'Veinte poemas de amor',
-    author: 'Pablo Neruda',
-    excerpt: 'Lo releí por quinta vez y encontré algo que no había visto antes. Eso es lo que hace la buena poesía.',
-    genre: 'poesia' as const,
-    date: 'Enero 2025',
-    readTime: '6 min',
-    slug: 'veinte-poemas-neruda',
-    spineColor: 'var(--lavender)',
-  },
-];
+ 
+const allLecturas = await getCollection('lecturas');
+const allNotas    = await getCollection('notas');
+ 
+const recentBooks = allLecturas
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .slice(0, 3);
+ 
+// Stats dinámicos
+const totalLibros   = allLecturas.length;
+const totalAutores  = new Set(allLecturas.map(l => l.data.author)).size;
+const totalEntradas = allLecturas.length + allNotas.length;
+ 
+// Meses activa: desde la entrada más antigua hasta hoy
+const fechas      = allLecturas.map(l => l.data.date.getTime());
+const fechaMasAntigua = new Date(Math.min(...fechas));
+const hoy         = new Date();
+const mesesActiva = Math.max(1, Math.round(
+  (hoy.getFullYear() - fechaMasAntigua.getFullYear()) * 12 +
+  (hoy.getMonth()    - fechaMasAntigua.getMonth())
+));
+ 
+const spineColors: Record<string, string> = {
+  ficcion:   'var(--rust)',
+  ensayo:    'var(--teal)',
+  poesia:    'var(--lavender)',
+  filosofia: 'var(--sage)',
+  historia:  'var(--butter)',
+  otro:      'var(--muted)',
+};
 ---
 
 <BaseLayout
@@ -114,10 +110,18 @@ const recentBooks = [
       <h2 class="section-title">Lecturas recientes</h2>
       <a href="/lecturas" class="section-link">Ver todo el archivo →</a>
     </div>
-
     <div class="books-grid">
       {recentBooks.map((book) => (
-        <BookCard {...book} />
+        <BookCard
+          title={book.data.title}
+          author={book.data.author}
+          excerpt={book.data.excerpt}
+          genre={book.data.genre}
+          date={book.data.date.toLocaleDateString('es-MX', { year: 'numeric', month: 'long' })}
+          readTime={book.data.readTime}
+          slug={book.id}
+          spineColor={spineColors[book.data.genre]}
+        />
       ))}
     </div>
   </section>
@@ -147,20 +151,20 @@ const recentBooks = [
     <div class="about-right">
       <div class="stats-grid">
         <div class="stat">
-          <p class="stat-number">47</p>
+          <p class="stat-number">{totalLibros}</p>
           <p class="stat-label">Libros reseñados</p>
         </div>
         <div class="stat">
-          <p class="stat-number">12</p>
+          <p class="stat-number">{mesesActiva}</p>
           <p class="stat-label">Meses activa</p>
         </div>
         <div class="stat">
-          <p class="stat-number">22</p>
+          <p class="stat-number">{totalAutores}</p>
           <p class="stat-label">Autores explorados</p>
         </div>
         <div class="stat">
-          <p class="stat-number">∞</p>
-          <p class="stat-label">Libros pendientes</p>
+          <p class="stat-number">{totalEntradas}</p>
+          <p class="stat-label">Entradas publicadas</p>
         </div>
       </div>
       <a href="/sobre-mi" class="about-cta">Leer más sobre mí →</a>

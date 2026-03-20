@@ -1,44 +1,12 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-// Cuando conectes Content Collections, esto vendrá de ahí.
-const notas = [
-  {
-    title: 'Sobre leer despacio',
-    excerpt: 'Vivimos en una cultura que celebra la cantidad. Cuántos libros leíste este año, cuántas páginas al día. Pero leer rápido y leer bien son dos cosas distintas.',
-    date: 'Marzo 2025',
-    readTime: '4 min',
-    slug: 'sobre-leer-despacio',
-  },
-  {
-    title: 'Por qué subrayo todo',
-    excerpt: 'Mi copia de cualquier libro que me importa parece un accidente con un marcador amarillo. No me disculpo por eso.',
-    date: 'Febrero 2025',
-    readTime: '3 min',
-    slug: 'por-que-subrayo-todo',
-  },
-  {
-    title: 'Lo que los libros no pueden darte',
-    excerpt: 'Hay una trampa en leer mucho: confundir comprensión intelectual con experiencia vivida. Son cosas diferentes.',
-    date: 'Enero 2025',
-    readTime: '5 min',
-    slug: 'lo-que-los-libros-no-pueden-darte',
-  },
-  {
-    title: 'Releer es distinto a leer',
-    excerpt: 'Cuando relees un libro no estás leyendo el mismo libro. Estás leyendo el libro que tú eres ahora.',
-    date: 'Diciembre 2024',
-    readTime: '4 min',
-    slug: 'releer-es-distinto',
-  },
-  {
-    title: 'La soledad de leer en público',
-    excerpt: 'Siempre cargo un libro a todas partes. La gente asume que no quiero hablar. A veces tienen razón.',
-    date: 'Noviembre 2024',
-    readTime: '3 min',
-    slug: 'leer-en-publico',
-  },
-];
+ 
+const allNotas = await getCollection('notas');
+ 
+const notas = allNotas.sort((a, b) =>
+  new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
 ---
 
 <BaseLayout
@@ -65,15 +33,17 @@ const notas = [
   <ol class="notas-list">
     {notas.map((nota, i) => (
       <li class="nota-item">
-        <a href={`/notas/${nota.slug}`} class="nota-link">
+        <a href={`/notas/${nota.id}`} class="nota-link">
           <span class="nota-num">0{i + 1}</span>
           <div class="nota-body">
-            <h2 class="nota-title">{nota.title}</h2>
-            <p class="nota-excerpt">{nota.excerpt}</p>
+            <h2 class="nota-title">{nota.data.title}</h2>
+            <p class="nota-excerpt">{nota.data.excerpt}</p>
           </div>
           <div class="nota-meta">
-            <span class="nota-date">{nota.date}</span>
-            <span class="nota-time">{nota.readTime}</span>
+            <span class="nota-date">
+              {nota.data.date.toLocaleDateString('es-MX', { year: 'numeric', month: 'long' })}
+            </span>
+            <span class="nota-time">{nota.data.readTime}</span>
             <span class="nota-arrow">↗</span>
           </div>
         </a>

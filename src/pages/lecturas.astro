@@ -1,72 +1,24 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BookCard from '../components/BookCard.astro';
 import TagBadge from '../components/TagBadge.astro';
-
-// Cuando conectes Content Collections, esto vendrá de ahí.
-const books = [
-  {
-    title: 'Las olas',
-    author: 'Virginia Woolf',
-    excerpt: 'Hay libros que no se leen sino que se habitan. Woolf construye algo entre novela y poema que no te suelta.',
-    genre: 'ficcion' as const,
-    date: 'Marzo 2025',
-    readTime: '15 min',
-    slug: 'las-olas-woolf',
-    spineColor: 'var(--rust)',
-  },
-  {
-    title: 'Cómo vivir: Montaigne',
-    author: 'Sarah Bakewell',
-    excerpt: 'Una biografía que es también un manual de filosofía práctica. No leí a Montaigne, lo conocí.',
-    genre: 'ensayo' as const,
-    date: 'Febrero 2025',
-    readTime: '12 min',
-    slug: 'como-vivir-montaigne',
-    spineColor: 'var(--teal)',
-  },
-  {
-    title: 'Veinte poemas de amor',
-    author: 'Pablo Neruda',
-    excerpt: 'Lo releí por quinta vez y encontré algo que no había visto antes. Eso es lo que hace la buena poesía.',
-    genre: 'poesia' as const,
-    date: 'Enero 2025',
-    readTime: '6 min',
-    slug: 'veinte-poemas-neruda',
-    spineColor: 'var(--lavender)',
-  },
-  {
-    title: 'El nombre de la rosa',
-    author: 'Umberto Eco',
-    excerpt: 'Una novela que es a la vez thriller, filosofía medieval y tratado sobre el poder del conocimiento.',
-    genre: 'ficcion' as const,
-    date: 'Diciembre 2024',
-    readTime: '20 min',
-    slug: 'el-nombre-de-la-rosa',
-    spineColor: 'var(--sage)',
-  },
-  {
-    title: 'Sapiens',
-    author: 'Yuval Noah Harari',
-    excerpt: 'La historia de la humanidad contada con una honestidad que incomoda. Imprescindible.',
-    genre: 'historia' as const,
-    date: 'Noviembre 2024',
-    readTime: '18 min',
-    slug: 'sapiens-harari',
-    spineColor: 'var(--butter)',
-  },
-  {
-    title: 'La república',
-    author: 'Platón',
-    excerpt: 'Preguntas de hace 2400 años que siguen sin respuesta. Eso es filosofía.',
-    genre: 'filosofia' as const,
-    date: 'Octubre 2024',
-    readTime: '22 min',
-    slug: 'la-republica-platon',
-    spineColor: '#8B7355',
-  },
-];
-
+ 
+const allLecturas = await getCollection('lecturas');
+ 
+const books = allLecturas.sort((a, b) =>
+  new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+ 
+const spineColors: Record<string, string> = {
+  ficcion:   'var(--rust)',
+  ensayo:    'var(--teal)',
+  poesia:    'var(--lavender)',
+  filosofia: 'var(--sage)',
+  historia:  'var(--butter)',
+  otro:      'var(--muted)',
+};
+ 
 const genres = ['ficcion', 'ensayo', 'poesia', 'filosofia', 'historia'] as const;
 ---
 
@@ -104,10 +56,19 @@ const genres = ['ficcion', 'ensayo', 'poesia', 'filosofia', 'historia'] as const
   </div>
 
   <!-- ── GRID ── -->
-  <div class="books-grid" id="books-grid">
+  <div class="books-grid">
     {books.map((book) => (
-      <div class="book-wrap" data-genre={book.genre}>
-        <BookCard {...book} />
+      <div class="book-wrap" data-genre={book.data.genre}>
+        <BookCard
+          title={book.data.title}
+          author={book.data.author}
+          excerpt={book.data.excerpt}
+          genre={book.data.genre}
+          date={book.data.date.toLocaleDateString('es-MX', { year: 'numeric', month: 'long' })}
+          readTime={book.data.readTime}
+          slug={book.id}
+          spineColor={spineColors[book.data.genre]}
+        />
       </div>
     ))}
   </div>
@@ -224,11 +185,13 @@ const genres = ['ficcion', 'ensayo', 'poesia', 'filosofia', 'historia'] as const
   .books-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    border-top: var(--border);
-    border-left: var(--border);
+    border: var(--border);
   }
 
   .book-wrap {
+    /* Bordes internos via outline para evitar dobles */
+    outline: var(--border);
+    outline-offset: -1px;
     transition: opacity 0.3s;
   }
 

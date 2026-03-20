@@ -1,0 +1,128 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const notas = await getCollection('notas');
+  return notas.map(entry => ({
+    params: { slug: entry.id },
+    props:  { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { title, date, readTime, excerpt } = entry.data;
+
+const dateFormatted = date.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<BaseLayout title={`${title} — Miranda Urban`} description={excerpt}>
+
+  <section class="nota-header">
+    <p class="eyebrow">
+      <a href="/notas" class="back-link">← Notas</a>
+    </p>
+    <h1 class="nota-title">{title}</h1>
+    <p class="nota-meta">{dateFormatted} · {readTime} de lectura</p>
+  </section>
+
+  <article class="nota-body">
+    <Content />
+  </article>
+
+  <div class="post-nav">
+    <a href="/notas" class="post-nav-link">← Volver a notas</a>
+    <a href="/archivo" class="post-nav-link">Ver archivo →</a>
+  </div>
+
+</BaseLayout>
+
+<style>
+  .nota-header {
+    padding: 5rem 3rem 3.5rem;
+    border-bottom: var(--border);
+    max-width: 780px;
+    margin: 0 auto;
+  }
+  .back-link {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(44,44,42,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--rust); }
+  .eyebrow { margin-bottom: 1.5rem; }
+  .nota-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 400;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  .nota-meta {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(44,44,42,0.35);
+  }
+  .nota-body {
+    max-width: 680px;
+    padding: 5rem 3rem;
+    margin: 0 auto;
+  }
+  .nota-body :global(h2) {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin: 3rem 0 1rem;
+  }
+  .nota-body :global(p) {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 1.4rem;
+    color: rgba(44,44,42,0.9);
+  }
+  .nota-body :global(blockquote) {
+    border-left: 3px solid var(--rust);
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    margin: 2rem 0;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: rgba(44,44,42,0.75);
+  }
+  .nota-body :global(em)     { font-style: italic; }
+  .nota-body :global(strong) { font-weight: 400; border-bottom: 1.5px solid var(--ink); }
+  .nota-body :global(hr)     { border: none; border-top: var(--border); margin: 3rem 0; }
+  .post-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 3rem;
+    border-top: var(--border);
+  }
+  .post-nav-link {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    color: rgba(44,44,42,0.4);
+    transition: color 0.2s;
+  }
+  .post-nav-link:hover { color: var(--rust); }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .nota-title { animation: fadeUp 0.5s ease 0.1s both; }
+  .nota-meta  { animation: fadeUp 0.5s ease 0.2s both; }
+</style>
