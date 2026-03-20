@@ -10,10 +10,10 @@ const lecturas = defineCollection({
     coverImage: z.string().optional(),
     rating:     z.number().min(1).max(5).optional(),
     date:       z.date(),
+    readYear:   z.number().optional(), // Año de lectura si fue antes de publicar
     readTime:   z.string(),
     excerpt:    z.string(),
     year:       z.number().optional(),
-    pages:      z.number().optional(),
     publisher:  z.string().optional(),
   }),
 });

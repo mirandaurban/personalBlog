@@ -10,6 +10,7 @@ interface Props {
   readTime: string;
   slug: string;
   spineColor?: string;
+  readYear?: number;
 }
 
 const {
@@ -21,6 +22,7 @@ const {
   readTime,
   slug,
   spineColor = 'var(--rust)',
+  readYear,
 } = Astro.props;
 ---
 
@@ -32,7 +34,9 @@ const {
   <h3 class="book-title">{title}</h3>
   <p class="book-author">{author}</p>
   <p class="book-excerpt">{excerpt}</p>
-  <p class="book-meta">{date} · {readTime}</p>
+  <p class="book-meta">
+    {readYear ? `Leído en ${readYear}` : date} · {readTime}
+  </p>
   <span class="read-arrow">↗</span>
 </a>
 
@@ -54,7 +58,6 @@ const {
     color: var(--cream);
   }
 
-  /* Override TagBadge border on hover */
   .book-card:hover :global(.tag) {
     border-color: var(--cream);
     color: var(--cream);

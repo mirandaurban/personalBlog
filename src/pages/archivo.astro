@@ -6,29 +6,29 @@ import TagBadge from '../components/TagBadge.astro';
 const allLecturas = await getCollection('lecturas');
 const allNotas    = await getCollection('notas');
 
-// Unificar y ordenar por fecha descendente
 const entries = [
   ...allLecturas.map(e => ({
-    type:  'lectura' as const,
-    title: e.data.title,
-    author: e.data.author,
-    genre: e.data.genre,
-    date:  e.data.date,
-    slug:  `/lecturas/${e.id}`,
-    year:  e.data.date.getFullYear(),
+    type:     'lectura' as const,
+    title:    e.data.title,
+    author:   e.data.author,
+    genre:    e.data.genre,
+    date:     e.data.date,
+    readYear: e.data.readYear,
+    slug:     `/lecturas/${e.id}`,
+    year:     e.data.date.getFullYear(),
   })),
   ...allNotas.map(e => ({
-    type:  'nota' as const,
-    title: e.data.title,
-    author: null,
-    genre: null,
-    date:  e.data.date,
-    slug:  `/notas/${e.id}`,
-    year:  e.data.date.getFullYear(),
+    type:     'nota' as const,
+    title:    e.data.title,
+    author:   null,
+    genre:    null,
+    date:     e.data.date,
+    readYear: undefined,
+    slug:     `/notas/${e.id}`,
+    year:     e.data.date.getFullYear(),
   })),
 ].sort((a, b) => b.date.getTime() - a.date.getTime());
 
-// Agrupar por año
 const byYear = entries.reduce((acc, entry) => {
   if (!acc[entry.year]) acc[entry.year] = [];
   acc[entry.year].push(entry);
@@ -71,6 +71,9 @@ const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
               <div class="entry-body">
                 <span class="entry-title">{entry.title}</span>
                 {entry.author && <span class="entry-author">— {entry.author}</span>}
+                {entry.readYear && entry.readYear !== entry.year && (
+                  <span class="entry-readyear">leído en {entry.readYear}</span>
+                )}
               </div>
               <div class="entry-right">
                 {entry.genre && <TagBadge genre={entry.genre} />}
@@ -166,10 +169,7 @@ const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
     color: var(--ink);
     transition: background 0.2s;
   }
-  .entry-link:hover {
-    background: var(--ink);
-    color: var(--cream);
-  }
+  .entry-link:hover { background: var(--ink); color: var(--cream); }
   .entry-type { font-size: 0.9rem; opacity: 0.6; transition: opacity 0.2s; }
   .entry-link:hover .entry-type { opacity: 0.8; }
   .entry-body {
@@ -190,16 +190,29 @@ const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
     font-style: italic;
     opacity: 0.55;
   }
+  .entry-readyear {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--rust);
+    opacity: 0.8;
+    border: 1px solid var(--rust);
+    border-radius: 999px;
+    padding: 0.1rem 0.5rem;
+  }
+  .entry-link:hover .entry-readyear {
+    color: var(--blush);
+    border-color: var(--blush);
+    opacity: 0.9;
+  }
   .entry-right {
     display: flex;
     align-items: center;
     gap: 1rem;
     flex-shrink: 0;
   }
-  .entry-right :global(.tag) {
-    font-size: 0.58rem;
-    padding: 0.25rem 0.65rem;
-  }
+  .entry-right :global(.tag) { font-size: 0.58rem; padding: 0.25rem 0.65rem; }
   .entry-date {
     font-family: var(--font-mono);
     font-size: 0.62rem;
@@ -216,10 +229,7 @@ const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
     transition: opacity 0.2s, transform 0.2s;
     justify-self: end;
   }
-  .entry-link:hover .entry-arrow {
-    opacity: 1;
-    transform: translate(3px, -3px);
-  }
+  .entry-link:hover .entry-arrow { opacity: 1; transform: translate(3px, -3px); }
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
