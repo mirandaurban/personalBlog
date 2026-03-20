@@ -11,6 +11,7 @@ interface Props {
   slug: string;
   spineColor?: string;
   readYear?: number;
+  coverImage?: string;
 }
 
 const {
@@ -23,13 +24,20 @@ const {
   slug,
   spineColor = 'var(--rust)',
   readYear,
+  coverImage,
 } = Astro.props;
 ---
 
 <a href={`/lecturas/${slug}`} class="book-card">
-  <div class="book-spine" style={`background:${spineColor}`}>
-    {title}
-  </div>
+  {coverImage ? (
+    <div class="book-cover">
+      <img src={coverImage} alt={`Portada de ${title}`} />
+    </div>
+  ) : (
+    <div class="book-spine" style={`background:${spineColor}`}>
+      {title}
+    </div>
+  )}
   <TagBadge genre={genre} />
   <h3 class="book-title">{title}</h3>
   <p class="book-author">{author}</p>
@@ -63,6 +71,30 @@ const {
     color: var(--cream);
   }
 
+  /* Portada real */
+  .book-cover {
+    width: 44px;
+    height: 64px;
+    margin-bottom: 1.2rem;
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: 3px 4px 10px rgba(44,44,42,0.15);
+    flex-shrink: 0;
+  }
+
+  .book-cover img {
+    width: 44px;
+    height: 64px;
+    object-fit: cover;
+    display: block;
+    transition: filter 0.2s;
+  }
+
+  .book-card:hover .book-cover img {
+    filter: brightness(0.85);
+  }
+
+  /* Lomo de fallback */
   .book-spine {
     width: 44px;
     height: 64px;
