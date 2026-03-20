@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { title, author, genre, coverImage, rating, date, readTime, excerpt, year, pages, publisher } = entry.data;
+const { title, author, genre, coverImage, rating, date, readTime, excerpt, year, pages, publisher, readYear } = entry.data;
 
 const dateFormatted = date.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' });
 
@@ -29,6 +29,7 @@ const spineColors: Record<string, string> = {
 
 <BaseLayout title={`${title} — Miranda Urban`} description={excerpt}>
 
+  <!-- ── HERO EDITORIAL ── -->
   <section class="book-hero">
 
     <div class="hero-left">
@@ -46,9 +47,15 @@ const spineColors: Record<string, string> = {
         )}
       </div>
       <p class="book-excerpt">{excerpt}</p>
-      <p class="post-meta">{dateFormatted} · {readTime} de lectura</p>
+      <p class="post-meta">
+        {readYear
+          ? `Leído en ${readYear} · Publicado el ${dateFormatted} · ${readTime} de lectura`
+          : `${dateFormatted} · ${readTime} de lectura`
+        }
+      </p>
     </div>
 
+    <!-- Columna derecha: portada + ficha técnica -->
     <div class="hero-right">
       {coverImage ? (
         <div class="cover-wrap">
@@ -63,6 +70,7 @@ const spineColors: Record<string, string> = {
       {(year || pages || publisher) && (
         <dl class="book-data">
           {year      && <><dt>Año</dt><dd>{year}</dd></>}
+          {pages     && <><dt>Páginas</dt><dd>{pages}</dd></>}
           {publisher && <><dt>Editorial</dt><dd>{publisher}</dd></>}
         </dl>
       )}
@@ -70,10 +78,12 @@ const spineColors: Record<string, string> = {
 
   </section>
 
+  <!-- ── REVIEW ── -->
   <article class="review">
     <Content />
   </article>
 
+  <!-- ── NAV ── -->
   <div class="post-nav">
     <a href="/lecturas" class="post-nav-link">← Volver a lecturas</a>
     <a href="/archivo" class="post-nav-link">Ver archivo →</a>
@@ -82,11 +92,12 @@ const spineColors: Record<string, string> = {
 </BaseLayout>
 
 <style>
+  /* ── HERO ── */
   .book-hero {
     display: grid;
-    grid-template-columns: 1fr 280px;
+    grid-template-columns: 1fr 350px;
     gap: 0;
-    padding: 3.5rem 5rem;
+    padding: 3.5rem 16rem;
     border-bottom: var(--border);
     align-items: start;
   }
@@ -95,11 +106,11 @@ const spineColors: Record<string, string> = {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    padding-right: 3rem;
+    padding-left: 3rem;
     border-right: var(--border);
   }
 
-  .eyebrow { margin-bottom: 0.5rem; }
+  .eyebrow { margin-bottom: 1rem; }
 
   .back-link {
     font-family: var(--font-mono);
@@ -118,7 +129,7 @@ const spineColors: Record<string, string> = {
     font-weight: 400;
     line-height: 1.0;
     letter-spacing: -0.03em;
-    margin-bottom: 0;
+    margin-bottom: 0.6rem;
   }
 
   .book-author {
@@ -160,8 +171,9 @@ const spineColors: Record<string, string> = {
     color: rgba(44,44,42,0.35);
   }
 
+  /* ── PORTADA ── */
   .hero-right {
-    padding: 0 2rem 2rem 2.5rem;
+    padding: 0 1.5rem 2rem 6rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -215,6 +227,7 @@ const spineColors: Record<string, string> = {
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 0.3rem 1rem;
+    margin-bottom: 1.5rem;
   }
 
   .book-data dt {
@@ -232,6 +245,7 @@ const spineColors: Record<string, string> = {
     color: var(--ink);
   }
 
+  /* ── REVIEW ── */
   .review {
     max-width: 700px;
     margin: 0 auto;
@@ -269,6 +283,7 @@ const spineColors: Record<string, string> = {
   .review :global(strong) { font-weight: 400; border-bottom: 1.5px solid var(--ink); }
   .review :global(hr)     { border: none; border-top: var(--border); margin: 3rem 0; }
 
+  /* ── POST NAV ── */
   .post-nav {
     display: flex;
     justify-content: space-between;
@@ -288,6 +303,7 @@ const spineColors: Record<string, string> = {
 
   .post-nav-link:hover { color: var(--rust); }
 
+  /* ── ANIMATIONS ── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(12px); }
     to   { opacity: 1; transform: translateY(0); }
