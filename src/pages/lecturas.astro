@@ -1,0 +1,275 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BookCard from '../components/BookCard.astro';
+import TagBadge from '../components/TagBadge.astro';
+
+// Cuando conectes Content Collections, esto vendrá de ahí.
+const books = [
+  {
+    title: 'Las olas',
+    author: 'Virginia Woolf',
+    excerpt: 'Hay libros que no se leen sino que se habitan. Woolf construye algo entre novela y poema que no te suelta.',
+    genre: 'ficcion' as const,
+    date: 'Marzo 2025',
+    readTime: '15 min',
+    slug: 'las-olas-woolf',
+    spineColor: 'var(--rust)',
+  },
+  {
+    title: 'Cómo vivir: Montaigne',
+    author: 'Sarah Bakewell',
+    excerpt: 'Una biografía que es también un manual de filosofía práctica. No leí a Montaigne, lo conocí.',
+    genre: 'ensayo' as const,
+    date: 'Febrero 2025',
+    readTime: '12 min',
+    slug: 'como-vivir-montaigne',
+    spineColor: 'var(--teal)',
+  },
+  {
+    title: 'Veinte poemas de amor',
+    author: 'Pablo Neruda',
+    excerpt: 'Lo releí por quinta vez y encontré algo que no había visto antes. Eso es lo que hace la buena poesía.',
+    genre: 'poesia' as const,
+    date: 'Enero 2025',
+    readTime: '6 min',
+    slug: 'veinte-poemas-neruda',
+    spineColor: 'var(--lavender)',
+  },
+  {
+    title: 'El nombre de la rosa',
+    author: 'Umberto Eco',
+    excerpt: 'Una novela que es a la vez thriller, filosofía medieval y tratado sobre el poder del conocimiento.',
+    genre: 'ficcion' as const,
+    date: 'Diciembre 2024',
+    readTime: '20 min',
+    slug: 'el-nombre-de-la-rosa',
+    spineColor: 'var(--sage)',
+  },
+  {
+    title: 'Sapiens',
+    author: 'Yuval Noah Harari',
+    excerpt: 'La historia de la humanidad contada con una honestidad que incomoda. Imprescindible.',
+    genre: 'historia' as const,
+    date: 'Noviembre 2024',
+    readTime: '18 min',
+    slug: 'sapiens-harari',
+    spineColor: 'var(--butter)',
+  },
+  {
+    title: 'La república',
+    author: 'Platón',
+    excerpt: 'Preguntas de hace 2400 años que siguen sin respuesta. Eso es filosofía.',
+    genre: 'filosofia' as const,
+    date: 'Octubre 2024',
+    readTime: '22 min',
+    slug: 'la-republica-platon',
+    spineColor: '#8B7355',
+  },
+];
+
+const genres = ['ficcion', 'ensayo', 'poesia', 'filosofia', 'historia'] as const;
+---
+
+<BaseLayout
+  title="Lecturas — Miranda Urban"
+  description="Todos los libros que he leído y reseñado."
+>
+
+  <!-- ── HEADER ── -->
+  <section class="page-header">
+    <div class="header-left">
+      <p class="eyebrow">✦ Lo que he leído</p>
+      <h1 class="page-title">Lecturas</h1>
+    </div>
+    <div class="header-right">
+      <p class="header-desc">
+        Cada libro que termino deja algo — una pregunta, una imagen, una frase
+        que no puedo sacarme de la cabeza. Aquí están todos.
+      </p>
+      <p class="counter">{books.length} reseñas</p>
+    </div>
+  </section>
+
+  <!-- ── FILTROS ── -->
+  <div class="filters">
+    <span class="filter-label">Filtrar por:</span>
+    <div class="filter-tags">
+      <button class="filter-btn active" data-genre="all">Todos</button>
+      {genres.map(g => (
+        <button class="filter-btn" data-genre={g}>
+          <TagBadge genre={g} />
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- ── GRID ── -->
+  <div class="books-grid" id="books-grid">
+    {books.map((book) => (
+      <div class="book-wrap" data-genre={book.genre}>
+        <BookCard {...book} />
+      </div>
+    ))}
+  </div>
+
+</BaseLayout>
+
+<style>
+  /* ── HEADER ── */
+  .page-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 5rem 3rem 3rem;
+    gap: 4rem;
+    align-items: end;
+    border-bottom: var(--border);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .page-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 6vw, 6.5rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+  }
+
+  .header-desc {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    font-weight: 300;
+    max-width: 40ch;
+    margin-bottom: 2rem;
+  }
+
+  .counter {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(44,44,42,0.4);
+  }
+
+  /* ── FILTROS ── */
+  .filters {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.2rem 3rem;
+    border-bottom: var(--border);
+    flex-wrap: wrap;
+  }
+
+  .filter-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(44,44,42,0.4);
+    flex-shrink: 0;
+  }
+
+  .filter-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .filter-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(44,44,42,0.5);
+    transition: color 0.2s;
+  }
+
+  .filter-btn[data-genre="all"] {
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    border: 1.5px solid transparent;
+    color: rgba(44,44,42,0.5);
+  }
+
+  .filter-btn[data-genre="all"].active {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+
+  .filter-btn:not([data-genre="all"]) :global(.tag) {
+    opacity: 0.5;
+    transition: opacity 0.2s;
+  }
+
+  .filter-btn:not([data-genre="all"]).active :global(.tag),
+  .filter-btn:not([data-genre="all"]):hover :global(.tag) {
+    opacity: 1;
+  }
+
+  /* ── GRID ── */
+  .books-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: var(--border);
+    border-left: var(--border);
+  }
+
+  .book-wrap {
+    transition: opacity 0.3s;
+  }
+
+  .book-wrap.hidden {
+    display: none;
+  }
+
+  /* Asegurar que BookCard llene el wrap */
+  .book-wrap :global(.book-card) {
+    height: 100%;
+    min-height: 280px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .eyebrow    { animation: fadeUp 0.5s ease both; }
+  .page-title { animation: fadeUp 0.5s ease 0.08s both; }
+  .header-desc { animation: fadeUp 0.5s ease 0.16s both; }
+</style>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  const cards   = document.querySelectorAll<HTMLElement>('.book-wrap');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const genre = btn.dataset.genre;
+      cards.forEach(card => {
+        if (genre === 'all' || card.dataset.genre === genre) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>

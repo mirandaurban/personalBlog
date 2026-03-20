@@ -1,0 +1,285 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TagBadge from '../components/TagBadge.astro';
+
+// Cuando conectes Content Collections, esto vendrá de ahí.
+// Mezcla de lecturas y notas en orden cronológico, agrupados por año.
+const entries = [
+  // 2025
+  { year: 2025, type: 'lectura', title: 'Las olas', author: 'Virginia Woolf', genre: 'ficcion' as const, date: 'Marzo 2025', slug: '/lecturas/las-olas-woolf' },
+  { year: 2025, type: 'nota',    title: 'Sobre leer despacio', author: null,  genre: null,               date: 'Marzo 2025', slug: '/notas/sobre-leer-despacio' },
+  { year: 2025, type: 'lectura', title: 'Cómo vivir: Montaigne', author: 'Sarah Bakewell', genre: 'ensayo' as const, date: 'Febrero 2025', slug: '/lecturas/como-vivir-montaigne' },
+  { year: 2025, type: 'nota',    title: 'Por qué subrayo todo', author: null, genre: null,               date: 'Febrero 2025', slug: '/notas/por-que-subrayo-todo' },
+  { year: 2025, type: 'lectura', title: 'Veinte poemas de amor', author: 'Pablo Neruda', genre: 'poesia' as const, date: 'Enero 2025', slug: '/lecturas/veinte-poemas-neruda' },
+  { year: 2025, type: 'nota',    title: 'Lo que los libros no pueden darte', author: null, genre: null,  date: 'Enero 2025', slug: '/notas/lo-que-los-libros-no-pueden-darte' },
+  // 2024
+  { year: 2024, type: 'lectura', title: 'El nombre de la rosa', author: 'Umberto Eco', genre: 'ficcion' as const, date: 'Diciembre 2024', slug: '/lecturas/el-nombre-de-la-rosa' },
+  { year: 2024, type: 'nota',    title: 'Releer es distinto a leer', author: null, genre: null,          date: 'Diciembre 2024', slug: '/notas/releer-es-distinto' },
+  { year: 2024, type: 'lectura', title: 'Sapiens', author: 'Yuval Noah Harari', genre: 'historia' as const, date: 'Noviembre 2024', slug: '/lecturas/sapiens-harari' },
+  { year: 2024, type: 'nota',    title: 'La soledad de leer en público', author: null, genre: null,      date: 'Noviembre 2024', slug: '/notas/leer-en-publico' },
+  { year: 2024, type: 'lectura', title: 'La república', author: 'Platón', genre: 'filosofia' as const,  date: 'Octubre 2024', slug: '/lecturas/la-republica-platon' },
+];
+
+// Agrupar por año
+const byYear = entries.reduce((acc, entry) => {
+  if (!acc[entry.year]) acc[entry.year] = [];
+  acc[entry.year].push(entry);
+  return acc;
+}, {} as Record<number, typeof entries>);
+
+const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
+---
+
+<BaseLayout
+  title="Archivo — Miranda Urban"
+  description="Todo lo que he escrito, ordenado por año."
+>
+
+  <!-- ── HEADER ── -->
+  <section class="page-header">
+    <div class="header-left">
+      <p class="eyebrow">✦ Todo en un lugar</p>
+      <h1 class="page-title">Archivo</h1>
+    </div>
+    <div class="header-right">
+      <p class="header-desc">
+        Lecturas y notas en orden cronológico. Un registro de lo que he leído,
+        pensado y escrito desde que empecé este blog.
+      </p>
+      <p class="counter">{entries.length} entradas · {years.length} años</p>
+    </div>
+  </section>
+
+  <!-- ── AÑOS ── -->
+  {years.map(year => (
+    <section class="year-section">
+
+      <!-- Encabezado del año -->
+      <div class="year-header">
+        <h2 class="year-label">{year}</h2>
+        <span class="year-count">{byYear[year].length} entradas</span>
+      </div>
+
+      <!-- Entradas del año -->
+      <ol class="entries-list">
+        {byYear[year].map((entry) => (
+          <li class="entry-item">
+            <a href={entry.slug} class="entry-link">
+
+              <!-- Tipo: lectura o nota -->
+              <span class={`entry-type entry-type--${entry.type}`}>
+                {entry.type === 'lectura' ? '📖' : '✏️'}
+              </span>
+
+              <!-- Contenido -->
+              <div class="entry-body">
+                <span class="entry-title">{entry.title}</span>
+                {entry.author && (
+                  <span class="entry-author">— {entry.author}</span>
+                )}
+              </div>
+
+              <!-- Meta derecha -->
+              <div class="entry-right">
+                {entry.genre && <TagBadge genre={entry.genre} />}
+                <span class="entry-date">{entry.date}</span>
+              </div>
+
+              <span class="entry-arrow">↗</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+
+    </section>
+  ))}
+
+</BaseLayout>
+
+<style>
+  /* ── HEADER ── */
+  .page-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 5rem 3rem 3rem;
+    gap: 4rem;
+    align-items: end;
+    border-bottom: var(--border);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .page-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 6vw, 6.5rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+  }
+
+  .header-desc {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    font-weight: 300;
+    max-width: 40ch;
+    margin-bottom: 2rem;
+  }
+
+  .counter {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(44,44,42,0.4);
+  }
+
+  /* ── AÑO ── */
+  .year-section {
+    border-bottom: var(--border);
+  }
+
+  .year-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 2rem 3rem 0.75rem;
+    border-bottom: var(--border);
+    background: var(--cream);
+    position: sticky;
+    top: 57px; /* altura del nav */
+    z-index: 10;
+  }
+
+  .year-label {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .year-count {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(44,44,42,0.35);
+  }
+
+  /* ── ENTRADAS ── */
+  .entries-list {
+    list-style: none;
+  }
+
+  .entry-item {
+    border-bottom: 1px solid rgba(44,44,42,0.1);
+  }
+
+  .entry-item:last-child {
+    border-bottom: none;
+  }
+
+  .entry-link {
+    display: grid;
+    grid-template-columns: 2rem 1fr auto 1.5rem;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1.4rem 3rem;
+    text-decoration: none;
+    color: var(--ink);
+    transition: background 0.2s;
+  }
+
+  .entry-link:hover {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  .entry-type {
+    font-size: 0.9rem;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+
+  .entry-link:hover .entry-type {
+    opacity: 0.8;
+  }
+
+  .entry-body {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .entry-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  .entry-author {
+    font-size: 0.85rem;
+    font-weight: 300;
+    font-style: italic;
+    opacity: 0.55;
+  }
+
+  .entry-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0;
+  }
+
+  /* Tags más pequeños en el archivo */
+  .entry-right :global(.tag) {
+    font-size: 0.58rem;
+    padding: 0.25rem 0.65rem;
+  }
+
+  .entry-date {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.35;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+
+  .entry-link:hover .entry-date {
+    opacity: 0.5;
+  }
+
+  .entry-arrow {
+    font-size: 1rem;
+    opacity: 0.2;
+    transition: opacity 0.2s, transform 0.2s;
+    justify-self: end;
+  }
+
+  .entry-link:hover .entry-arrow {
+    opacity: 1;
+    transform: translate(3px, -3px);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .eyebrow     { animation: fadeUp 0.5s ease both; }
+  .page-title  { animation: fadeUp 0.5s ease 0.08s both; }
+  .header-desc { animation: fadeUp 0.5s ease 0.16s both; }
+</style>
