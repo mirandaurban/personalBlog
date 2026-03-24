@@ -237,4 +237,79 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .page-title   { animation: fadeUp 0.5s ease 0.08s both; }
   .header-desc  { animation: fadeUp 0.5s ease 0.16s both; }
   .subscribe-wrap { animation: fadeUp 0.5s ease 0.24s both; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .page-header {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding: 4rem 2rem 2.5rem;
+    }
+
+    .header-left,
+    .header-right {
+      order: 0;
+    }
+
+    .subscribe-wrap {
+      grid-template-columns: 1fr;
+      border-bottom: none;
+    }
+
+    .subscribe-left {
+      border-right: none;
+      border-bottom: var(--border);
+      padding: 3.5rem 2rem;
+    }
+
+    .subscribe-right {
+      padding: 3.5rem 2rem;
+    }
+
+    /* Ajustes del formulario en móvil */
+    .form-row {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .form-input {
+      border-right: var(--border);
+      border-radius: 0;
+    }
+
+    .form-btn {
+      width: 100%;
+      padding: 1rem 1.5rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .page-header {
+      padding: 3rem 1.5rem 2rem;
+    }
+
+    .subscribe-left,
+    .subscribe-right {
+      padding: 3rem 1.5rem;
+    }
+
+    .page-title {
+      font-size: clamp(2.6rem, 8vw, 4.8rem);
+    }
+
+    .header-desc {
+      font-size: 1rem;
+      max-width: 100%;
+    }
+
+    .promise-list li {
+      font-size: 0.95rem;
+    }
+
+    .form-input,
+    .form-btn {
+      font-size: 1rem;
+      padding: 1rem 1.25rem;
+    }
+  }
 </style>

@@ -315,4 +315,86 @@ const spineColors: Record<string, string> = {
   .meta-row     { animation: fadeUp 0.5s ease 0.2s both; }
   .book-excerpt { animation: fadeUp 0.5s ease 0.25s both; }
   .cover-wrap   { animation: fadeUp 0.6s ease 0.2s both; }
+
+  /* ==================== RESPONSIVE - PÁGINA INDIVIDUAL DE LIBRO ==================== */
+  @media (max-width: 1200px) {
+    .book-hero {
+      grid-template-columns: 1fr;           /* Se apila: texto arriba, portada abajo */
+      padding: 3rem 2rem;
+      gap: 2.5rem;
+    }
+
+    .hero-left {
+      border-right: none;
+      border-bottom: var(--border);
+      padding-left: 0;
+      padding-bottom: 2.5rem;
+    }
+
+    .hero-right {
+      padding: 0 1rem 1rem;
+      align-items: center;
+      text-align: center;
+    }
+
+    .cover-wrap {
+      width: 160px;
+      height: 236px;
+      margin: 0 auto;
+    }
+  }
+
+  /* ── RESPONSIVE ── */
+
+  @media (max-width: 768px) {
+    .book-hero { padding: 2.5rem 1.5rem; }
+
+    .hero-left { padding-bottom: 2rem; }
+
+    .book-title { font-size: clamp(1.8rem, 7vw, 2.8rem); }
+
+    .book-excerpt {
+      font-size: 1rem;
+      max-width: 100%;
+    }
+
+    .post-meta { font-size: 0.62rem; }
+
+    .cover-wrap {
+      width: 170px;
+      height: 252px;
+    }
+
+    .book-data {
+      grid-template-columns: 1fr;
+      gap: 0.4rem;
+      text-align: center;
+      margin: 1.5rem 0;
+    }
+
+    .book-data dt { font-size: 0.65rem; }
+  }
+
+  @media (max-width: 480px) {
+    .book-hero { padding: 2rem 1.25rem; }
+
+    .hero-right { padding: 0 0.5rem; }
+
+    .cover-wrap {
+      width: 155px;
+      height: 230px;
+    }
+
+    .review { padding: 3.5rem 1.5rem 4rem; }
+
+    .post-nav {
+      padding: 1.5rem 1.25rem;
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+    }
+
+    .post-nav-link { font-size: 0.75rem; }
+  }
+
 </style>

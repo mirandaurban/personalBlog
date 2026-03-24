@@ -204,4 +204,33 @@ const notas = allNotas.sort((a, b) =>
   .nota-item:nth-child(3) { animation: fadeUp 0.5s ease 0.2s both; }
   .nota-item:nth-child(4) { animation: fadeUp 0.5s ease 0.25s both; }
   .nota-item:nth-child(5) { animation: fadeUp 0.5s ease 0.3s both; }
+
+  /* ── RESPONSIVE ── */
+
+  @media (max-width: 1024px) {
+    .page-header {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding: 4rem 2rem 2.5rem;
+    }
+
+    .header-left,
+    .header-right {
+      order: 0;
+    }
+
+    .counter {
+      margin-top: 1.5rem;
+      order: 3;            
+    }
+  }
+
+  @media (max-width: 640px) {
+    .page-header {
+      padding: 3rem 1.5rem 2rem;
+    }
+    .header-desc {
+      margin-bottom: 1rem;
+    }
+  }
 </style>

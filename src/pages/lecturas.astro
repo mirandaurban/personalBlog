@@ -157,9 +157,10 @@ const genres = ['ficcion', 'ensayo', 'poesia', 'filosofia', 'historia'] as const
   .filter-btn:not([data-genre="all"]):hover :global(.tag) { opacity: 1; }
   .books-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     border-top: var(--border);
     border-left: var(--border);
+    gap: 0;
   }
   .book-wrap { transition: opacity 0.3s; }
   .book-wrap.hidden { display: none; }
@@ -171,6 +172,39 @@ const genres = ['ficcion', 'ensayo', 'poesia', 'filosofia', 'historia'] as const
   .eyebrow     { animation: fadeUp 0.5s ease both; }
   .page-title  { animation: fadeUp 0.5s ease 0.08s both; }
   .header-desc { animation: fadeUp 0.5s ease 0.16s both; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .page-header {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 4rem 2rem 2.5rem;
+    }
+    header-left,
+    .header-right {
+      order: 0;                      
+    }
+
+    .counter {
+      margin-top: 1rem;              
+      order: 3;                      
+    }
+  }
+
+  @media (max-width: 640px) {
+    .page-header {
+      padding: 3rem 1.5rem 2rem;
+    }
+    .filters {
+      padding: 1.2rem 1.5rem;
+    }
+    .books-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    .page-title {
+      font-size: clamp(2.8rem, 8vw, 5rem);
+    }
+  }
 </style>
 
 <script>

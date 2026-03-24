@@ -262,7 +262,8 @@ const spineColors: Record<string, string> = {
   }
   .books-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));  /* Mejor que repeat(3,1fr) */
+    gap: 0;
     border-top: var(--border);
     border-left: var(--border);
   }
@@ -369,4 +370,48 @@ const spineColors: Record<string, string> = {
   .scrap-2    { animation: fadeUp 0.7s ease 0.35s both; }
   .scrap-3    { animation: fadeUp 0.7s ease 0.45s both; }
   .scrap-4    { animation: fadeUp 0.7s ease 0.55s both; }
+
+  /* ── RESPONSIVE ── */
+
+  @media (max-width: 1024px) {
+    .hero {
+      grid-template-columns: 1fr;
+      min-height: auto;        
+    }
+    .hero-left {
+      border-right: none;
+      border-bottom: var(--border);
+      padding-bottom: 3rem;
+    }
+    .hero-right {
+      min-height: 520px;       
+    }
+    .scrapbook {
+      min-height: 520px;
+    }
+    .about-strip {
+      grid-template-columns: 1fr;     
+      min-height: auto;
+    }
+    .about-left {
+      border-right: none;
+      border-bottom: 1.5px solid rgba(237,232,223,0.2);
+      padding-bottom: 3rem;
+    }
+    .about-right {
+      padding-top: 3rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-left {
+      padding: 3rem 1.5rem;
+    }
+    .hero-title {
+      font-size: clamp(2.4rem, 8vw, 4rem);
+    }
+    .scrap-1, .scrap-2, .scrap-3, .scrap-4 {
+      transform: scale(0.85); 
+    }
+  }
 </style>

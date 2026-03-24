@@ -209,4 +209,112 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .scrap-2   { animation: fadeUp 0.6s ease 0.35s both; }
   .handnote  { animation: fadeUp 0.5s ease 0.55s both; }
   .sticker   { animation: fadeUp 0.4s ease 0.6s both; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .hero {
+      grid-template-columns: 1fr;         
+      min-height: auto;            
+      border-bottom: var(--border);
+    }
+
+    .hero-left {
+      border-right: none;
+      border-bottom: var(--border);
+      padding: 4rem 2rem 3.5rem;
+      justify-content: flex-start;    
+      gap: 1.75rem;
+    }
+
+    .hero-right {
+      min-height: 560px;              
+      padding: 2rem 0;
+    }
+
+    .scrapbook {
+      min-height: 560px;
+    }
+
+    /* Ajustes de posición de fotos */
+    .scrap-1 {
+      width: 180px;
+      height: 220px;
+      top: 12%;
+      left: 8%;
+      rotate: -4deg;
+    }
+    .scrap-2 {
+      width: 160px;
+      height: 200px;
+      top: 18%;
+      left: 55%;
+      rotate: 5deg;
+    }
+    .scrap-3 {
+      width: 160px;
+      height: 200px;
+      top: 58%;
+      left: 12%;
+      rotate: 3deg;
+    }
+    .scrap-4 {
+      width: 180px;
+      height: 220px;
+      top: 55%;
+      left: 52%;
+      rotate: -4deg;
+    }
+
+    .handnote {
+      top: 32%;
+      font-size: 0.78rem;
+      max-width: 110px;
+    }
+
+    .sticker {
+      bottom: 12%;
+      left: 10%;
+      font-size: 0.55rem;
+      padding: 0.3rem 0.8rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-left {
+      padding: 3rem 1.5rem 3rem;
+    }
+
+    .hero-right {
+      min-height: 480px;
+    }
+
+    .scrapbook {
+      min-height: 480px;
+    }
+
+    .hero-title {
+      font-size: clamp(2.8rem, 8.5vw, 4.8rem);
+    }
+
+    .hero-bio {
+      font-size: 1.05rem;
+      max-width: 100%;
+    }
+
+    /* Fotos más pequeñas en pantallas muy estrechas */
+    .scrap-1, .scrap-4 {
+      width: 155px;
+      height: 195px;
+    }
+    .scrap-2, .scrap-3 {
+      width: 140px;
+      height: 175px;
+    }
+
+    .handnote {
+      font-size: 0.75rem;
+      top: 8%;
+      left: 75%;
+    }
+  }
 </style>

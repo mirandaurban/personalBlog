@@ -237,4 +237,33 @@ const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
   .eyebrow     { animation: fadeUp 0.5s ease both; }
   .page-title  { animation: fadeUp 0.5s ease 0.08s both; }
   .header-desc { animation: fadeUp 0.5s ease 0.16s both; }
+
+  /* ── RESPONSIVE ── */
+
+  @media (max-width: 1024px) {
+    .page-header {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding: 4rem 2rem 2.5rem;
+    }
+
+    .header-left,
+    .header-right {
+      order: 0;
+    }
+
+    .counter {
+      margin-top: 1.5rem;
+      order: 3;               
+    }
+  }
+
+  @media (max-width: 640px) {
+    .page-header {
+      padding: 3rem 1.5rem 2rem;
+    }
+    .header-desc {
+      margin-bottom: 1rem;
+    }
+  }
 </style>
