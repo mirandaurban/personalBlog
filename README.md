@@ -28,11 +28,10 @@ Todo lo comparto con mucho cariño y con ganas de compartirle al mundo un poco d
 - **Issues**: uso las plantillas que están en `.github/ISSUE_TEMPLATE/`.
 - **Pull Requests**: siempre con descripción clara y pruebas locales (`npm run build`).
 
-**Licencias**
-
-- Código fuente (Astro, componentes, estilos): **MIT License** (ver `LICENSE`).
-- Contenido (reseñas, textos, opiniones): **Creative Commons BY-NC-ND 4.0**.
-  Puedes compartir mis textos con atribución, sin fines comerciales y sin modificaciones.
+**Licencias**  
+- Código fuente (Astro, componentes, estilos): **MIT License** (ver `CODE-LICENSE`).  
+- Contenido (reseñas, textos, opiniones): **Creative Commons BY-NC-SA 4.0** (ver `CONTENT-LICENSE.md`).  
+Puedes compartir mis textos con atribución y sin fines comerciales.
 
 ---
 
