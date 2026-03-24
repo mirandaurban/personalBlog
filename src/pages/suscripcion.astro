@@ -1,0 +1,315 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Suscríbete — Miranda Urban"
+  description="Recibe un aviso cada vez que publique algo nuevo. Sin spam, solo libros."
+>
+
+  <section class="page-header">
+    <div class="header-left">
+      <p class="eyebrow">✦ Quedémonos en contacto</p>
+      <h1 class="page-title">Suscríbete</h1>
+    </div>
+    <div class="header-right">
+      <p class="header-desc">
+        Cada vez que publique una reseña o una nota nueva, te mando un aviso.
+        Sin spam, sin algoritmos — solo un email cuando haya algo nuevo que leer.
+      </p>
+    </div>
+  </section>
+
+  <div class="subscribe-wrap">
+
+    <div class="subscribe-left">
+      <p class="promise-title">Qué esperar</p>
+      <ul class="promise-list">
+        <li>Un email cuando publique algo nuevo</li>
+        <li>Sin frecuencia forzada — publico cuando tengo algo que decir</li>
+        <li>Sin publicidad ni contenido patrocinado</li>
+        <li>Te puedes dar de baja cuando quieras</li>
+      </ul>
+    </div>
+
+    <div class="subscribe-right">
+      <form
+        action="https://buttondown.com/api/emails/embed-subscribe/mirandaurban"
+        method="post"
+        target="popupwindow"
+        onsubmit="window.open('https://buttondown.com/mirandaurban','popupwindow')"
+        class="subscribe-form"
+      >
+        <div class="form-group">
+          <label for="bd-email" class="form-label">Tu correo electrónico</label>
+          <div class="form-row">
+            <input
+              type="email"
+              name="email"
+              id="bd-email"
+              placeholder="tu@correo.com"
+              required
+              class="form-input"
+            />
+            <button type="submit" class="form-btn">Suscribirme →</button>
+          </div>
+        </div>
+        <p class="form-note">
+          Al suscribirte aceptas recibir emails ocasionales de Miranda Urban.
+          Puedes darte de baja en cualquier momento.
+        </p>
+      </form>
+    </div>
+
+  </div>
+
+</BaseLayout>
+
+<style>
+  .page-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 5rem 3rem 3rem;
+    gap: 4rem;
+    align-items: end;
+    border-bottom: var(--border);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .page-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+  }
+
+  .header-desc {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    font-weight: 300;
+    max-width: 40ch;
+  }
+
+  /* ── CONTENIDO ── */
+  .subscribe-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: var(--border);
+  }
+
+  .subscribe-left {
+    padding: 4rem 3rem;
+    border-right: var(--border);
+  }
+
+  .promise-title {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(44,44,42,0.4);
+    margin-bottom: 1.5rem;
+  }
+
+  .promise-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .promise-list li {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.5;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .promise-list li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    font-size: 0.5rem;
+    color: var(--rust);
+    top: 0.35rem;
+  }
+
+  /* ── FORMULARIO ── */
+  .subscribe-right {
+    padding: 4rem 3rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .subscribe-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .form-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(44,44,42,0.5);
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 0;
+  }
+
+  .form-input {
+    flex: 1;
+    padding: 0.85rem 1rem;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 300;
+    border: var(--border);
+    border-right: none;
+    background: var(--cream);
+    color: var(--ink);
+    outline: none;
+    border-radius: 0;
+    transition: border-color 0.2s;
+  }
+
+  .form-input::placeholder {
+    color: rgba(44,44,42,0.3);
+  }
+
+  .form-input:focus {
+    border-color: var(--rust);
+  }
+
+  .form-btn {
+    padding: 0.85rem 1.5rem;
+    background: var(--ink);
+    color: var(--cream);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: var(--border);
+    border-color: var(--ink);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+    border-radius: 0;
+  }
+
+  .form-btn:hover {
+    background: var(--rust);
+    border-color: var(--rust);
+  }
+
+  .form-note {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: rgba(44,44,42,0.3);
+    line-height: 1.6;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .eyebrow      { animation: fadeUp 0.5s ease both; }
+  .page-title   { animation: fadeUp 0.5s ease 0.08s both; }
+  .header-desc  { animation: fadeUp 0.5s ease 0.16s both; }
+  .subscribe-wrap { animation: fadeUp 0.5s ease 0.24s both; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .page-header {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding: 4rem 2rem 2.5rem;
+    }
+
+    .header-left,
+    .header-right {
+      order: 0;
+    }
+
+    .subscribe-wrap {
+      grid-template-columns: 1fr;
+      border-bottom: none;
+    }
+
+    .subscribe-left {
+      border-right: none;
+      border-bottom: var(--border);
+      padding: 3.5rem 2rem;
+    }
+
+    .subscribe-right {
+      padding: 3.5rem 2rem;
+    }
+
+    /* Ajustes del formulario en móvil */
+    .form-row {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .form-input {
+      border-right: var(--border);
+      border-radius: 0;
+    }
+
+    .form-btn {
+      width: 100%;
+      padding: 1rem 1.5rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .page-header {
+      padding: 3rem 1.5rem 2rem;
+    }
+
+    .subscribe-left,
+    .subscribe-right {
+      padding: 3rem 1.5rem;
+    }
+
+    .page-title {
+      font-size: clamp(2.6rem, 8vw, 4.8rem);
+    }
+
+    .header-desc {
+      font-size: 1rem;
+      max-width: 100%;
+    }
+
+    .promise-list li {
+      font-size: 0.95rem;
+    }
+
+    .form-input,
+    .form-btn {
+      font-size: 1rem;
+      padding: 1rem 1.25rem;
+    }
+  }
+</style>

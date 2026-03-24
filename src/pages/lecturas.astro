@@ -1,0 +1,227 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BookCard from '../components/BookCard.astro';
+import TagBadge from '../components/TagBadge.astro';
+
+const allLecturas = await getCollection('lecturas');
+
+const books = allLecturas.sort((a, b) =>
+  new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+const spineColors: Record<string, string> = {
+  ficcion:   'var(--rust)',
+  ensayo:    'var(--teal)',
+  poesia:    'var(--lavender)',
+  filosofia: 'var(--sage)',
+  historia:  'var(--butter)',
+  otro:      'var(--muted)',
+};
+
+const genres = ['ficcion', 'ensayo', 'poesia', 'filosofia', 'historia'] as const;
+---
+
+<BaseLayout
+  title="Lecturas — Miranda Urban"
+  description="Todos los libros que he leído y reseñado."
+>
+
+  <section class="page-header">
+    <div class="header-left">
+      <p class="eyebrow">✦ Lo que he leído</p>
+      <h1 class="page-title">Lecturas</h1>
+    </div>
+    <div class="header-right">
+      <p class="header-desc">
+        Cada libro que termino deja algo — una pregunta, una imagen, una frase
+        que no puedo sacarme de la cabeza. Aquí están todos.
+      </p>
+      <p class="counter">{books.length} reseñas</p>
+    </div>
+  </section>
+
+  <div class="filters">
+    <span class="filter-label">Filtrar por:</span>
+    <div class="filter-tags">
+      <button class="filter-btn active" data-genre="all">Todos</button>
+      {genres.map(g => (
+        <button class="filter-btn" data-genre={g}>
+          <TagBadge genre={g} />
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <div class="books-grid">
+    {books.map((book) => (
+      <div class="book-wrap" data-genre={book.data.genre}>
+        <BookCard
+          title={book.data.title}
+          author={book.data.author}
+          excerpt={book.data.excerpt}
+          genre={book.data.genre}
+          date={book.data.date.toLocaleDateString('es-MX', { year: 'numeric', month: 'long' })}
+          readYear={book.data.readYear}
+          readTime={book.data.readTime}
+          slug={book.id}
+          spineColor={spineColors[book.data.genre]}
+          coverImage={book.data.coverImage}
+        />
+      </div>
+    ))}
+  </div>
+
+</BaseLayout>
+
+<style>
+  .page-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 5rem 3rem 3rem;
+    gap: 4rem;
+    align-items: end;
+    border-bottom: var(--border);
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .page-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 6vw, 6.5rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+  }
+  .header-desc {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    font-weight: 300;
+    max-width: 40ch;
+    margin-bottom: 2rem;
+  }
+  .counter {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(44,44,42,0.4);
+  }
+  .filters {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.2rem 3rem;
+    border-bottom: var(--border);
+    flex-wrap: wrap;
+  }
+  .filter-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(44,44,42,0.4);
+    flex-shrink: 0;
+  }
+  .filter-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+  .filter-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(44,44,42,0.5);
+    transition: color 0.2s;
+  }
+  .filter-btn[data-genre="all"] {
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    border: 1.5px solid transparent;
+    color: rgba(44,44,42,0.5);
+  }
+  .filter-btn[data-genre="all"].active {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+  .filter-btn:not([data-genre="all"]) :global(.tag) { opacity: 0.5; transition: opacity 0.2s; }
+  .filter-btn:not([data-genre="all"]).active :global(.tag),
+  .filter-btn:not([data-genre="all"]):hover :global(.tag) { opacity: 1; }
+  .books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    border-top: var(--border);
+    border-left: var(--border);
+    gap: 0;
+  }
+  .book-wrap { transition: opacity 0.3s; }
+  .book-wrap.hidden { display: none; }
+  .book-wrap :global(.book-card) { height: 100%; min-height: 280px; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .eyebrow     { animation: fadeUp 0.5s ease both; }
+  .page-title  { animation: fadeUp 0.5s ease 0.08s both; }
+  .header-desc { animation: fadeUp 0.5s ease 0.16s both; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .page-header {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 4rem 2rem 2.5rem;
+    }
+    header-left,
+    .header-right {
+      order: 0;                      
+    }
+
+    .counter {
+      margin-top: 1rem;              
+      order: 3;                      
+    }
+  }
+
+  @media (max-width: 640px) {
+    .page-header {
+      padding: 3rem 1.5rem 2rem;
+    }
+    .filters {
+      padding: 1.2rem 1.5rem;
+    }
+    .books-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    .page-title {
+      font-size: clamp(2.8rem, 8vw, 5rem);
+    }
+  }
+</style>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  const cards   = document.querySelectorAll<HTMLElement>('.book-wrap');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const genre = btn.dataset.genre;
+      cards.forEach(card => {
+        if (genre === 'all' || card.dataset.genre === genre) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>

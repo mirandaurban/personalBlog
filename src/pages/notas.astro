@@ -1,0 +1,236 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+ 
+const allNotas = await getCollection('notas');
+ 
+const notas = allNotas.sort((a, b) =>
+  new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+---
+
+<BaseLayout
+  title="Notas — Miranda Urban"
+  description="Reflexiones libres sobre leer, pensar y todo lo demás."
+>
+
+  <!-- ── HEADER ── -->
+  <section class="page-header">
+    <div class="header-left">
+      <p class="eyebrow">✦ Reflexiones libres</p>
+      <h1 class="page-title">Notas</h1>
+    </div>
+    <div class="header-right">
+      <p class="header-desc">
+        No son reseñas ni análisis. Son pensamientos que empezaron en un margen
+        y necesitaban más espacio.
+      </p>
+      <p class="counter">{notas.length} notas</p>
+    </div>
+  </section>
+
+  <!-- ── LISTA DE NOTAS ── -->
+  <ol class="notas-list">
+    {notas.map((nota, i) => (
+      <li class="nota-item">
+        <a href={`/notas/${nota.id}`} class="nota-link">
+          <span class="nota-num">0{i + 1}</span>
+          <div class="nota-body">
+            <h2 class="nota-title">{nota.data.title}</h2>
+            <p class="nota-excerpt">{nota.data.excerpt}</p>
+          </div>
+          <div class="nota-meta">
+            <span class="nota-date">
+              {nota.data.date.toLocaleDateString('es-MX', { year: 'numeric', month: 'long' })}
+            </span>
+            <span class="nota-time">{nota.data.readTime}</span>
+            <span class="nota-arrow">↗</span>
+          </div>
+        </a>
+      </li>
+    ))}
+  </ol>
+
+</BaseLayout>
+
+<style>
+  /* ── HEADER ── */
+  .page-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 5rem 3rem 3rem;
+    gap: 4rem;
+    align-items: end;
+    border-bottom: var(--border);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .page-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 6vw, 6.5rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+  }
+
+  .header-desc {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    font-weight: 300;
+    max-width: 40ch;
+    margin-bottom: 2rem;
+  }
+
+  .counter {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(44,44,42,0.4);
+  }
+
+  /* ── LISTA ── */
+  .notas-list {
+    list-style: none;
+  }
+
+  .nota-item {
+    border-bottom: var(--border);
+  }
+
+  .nota-link {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    gap: 2rem;
+    align-items: center;
+    padding: 2.5rem 3rem;
+    text-decoration: none;
+    color: var(--ink);
+    transition: background 0.2s;
+  }
+
+  .nota-link:hover {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  .nota-num {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: rgba(44,44,42,0.3);
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+    align-self: start;
+    padding-top: 0.3rem;
+  }
+
+  .nota-link:hover .nota-num {
+    color: rgba(237,232,223,0.3);
+  }
+
+  .nota-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.6rem;
+    line-height: 1.2;
+  }
+
+  .nota-excerpt {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    font-weight: 300;
+    max-width: 60ch;
+    opacity: 0.7;
+  }
+
+  .nota-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.4rem;
+    flex-shrink: 0;
+  }
+
+  .nota-date,
+  .nota-time {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.4;
+    transition: opacity 0.2s;
+  }
+
+  .nota-link:hover .nota-date,
+  .nota-link:hover .nota-time {
+    opacity: 0.5;
+  }
+
+  .nota-arrow {
+    font-size: 1.1rem;
+    opacity: 0.2;
+    transition: opacity 0.2s, transform 0.2s;
+    margin-top: 0.5rem;
+  }
+
+  .nota-link:hover .nota-arrow {
+    opacity: 1;
+    transform: translate(3px, -3px);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .eyebrow     { animation: fadeUp 0.5s ease both; }
+  .page-title  { animation: fadeUp 0.5s ease 0.08s both; }
+  .header-desc { animation: fadeUp 0.5s ease 0.16s both; }
+
+  .nota-item:nth-child(1) { animation: fadeUp 0.5s ease 0.1s both; }
+  .nota-item:nth-child(2) { animation: fadeUp 0.5s ease 0.15s both; }
+  .nota-item:nth-child(3) { animation: fadeUp 0.5s ease 0.2s both; }
+  .nota-item:nth-child(4) { animation: fadeUp 0.5s ease 0.25s both; }
+  .nota-item:nth-child(5) { animation: fadeUp 0.5s ease 0.3s both; }
+
+  /* ── RESPONSIVE ── */
+
+  @media (max-width: 1024px) {
+    .page-header {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding: 4rem 2rem 2.5rem;
+    }
+
+    .header-left,
+    .header-right {
+      order: 0;
+    }
+
+    .counter {
+      margin-top: 1.5rem;
+      order: 3;            
+    }
+  }
+
+  @media (max-width: 640px) {
+    .page-header {
+      padding: 3rem 1.5rem 2rem;
+    }
+    .header-desc {
+      margin-bottom: 1rem;
+    }
+  }
+</style>

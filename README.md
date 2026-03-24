@@ -1,24 +1,29 @@
-# Miranda's blog 🌈✨🦋🧠🍃🌌
-Mi blog personal de reseñas, opiniones y más. Aquí es posible experimentar el mundo a través de mi mente, te invito a leerlo. 
+# Miranda Urban — Blog personal 🌈✨🦋🧠🍃🌌
+
+Mi blog personal de reseñas, reflexiones y todo lo que encuentro valioso en los libros.
+Aquí es posible experimentar el mundo a través de mi mente — te invito a leerlo.
 Todo lo comparto con mucho cariño y con ganas de compartirle al mundo un poco de lo que encuentro valioso.
 
 **¿Qué vas a encontrar?**
-- Reseñas y resumenes de los libros que he leído
-- Recomendaciones
-- Sección "TBR" (To Be Read)
-- (Próximamente) opiniones, tips, y más
+
+- Reseñas y reflexiones de los libros que he leído
+- Notas libres sobre leer, pensar y todo lo demás
+- Archivo cronológico de lecturas y notas
+
+🔗 [mirandaurban.com](https://buttondown.com/mirandaurban) · 📬 [Suscríbete](https://buttondown.com/mirandaurban)
 
 ---
 
 ## Cómo funciona este repositorio
 
-**Reglas y flujo de trabajo** 
+**Reglas y flujo de trabajo**
 
-- **Branch principal**: `main` → siempre en producción (GitHub Pages lo deployea automáticamente).
+- **Branch principal**: `main` → siempre en producción (Vercel lo deployea automáticamente).
 - **Branch de desarrollo**: `develop` → aquí pruebo todo nuevo.
-- **Commits**: especificar tipo de commit y breve descripción (ej. `feat: nuevo post sobre El libro X`).
-- **Posts nuevos**: siempre en `src/content/blog/` con formato `titulo-del-post.md`.
-- **Imágenes**: solo en carpeta `public/images/` (portadas, collages, etc.).
+- **Commits**: especificar tipo de commit y breve descripción (ej. `feat: nueva reseña de El libro X`).
+- **Lecturas nuevas**: en `src/content/lecturas/` con formato `titulo-del-libro.md`.
+- **Notas nuevas**: en `src/content/notas/` con formato `titulo-de-la-nota.md`.
+- **Imágenes**: en `public/images/` (collages, fotos) y `public/images/covers/` (portadas de libros).
 - **Cambios grandes**: primero en `develop`, luego merge a `main` con Pull Request.
 - **Issues**: uso las plantillas que están en `.github/ISSUE_TEMPLATE/`.
 - **Pull Requests**: siempre con descripción clara y pruebas locales (`npm run build`).
@@ -38,20 +43,65 @@ personalBlog/
 │   └── ISSUE_TEMPLATE/
 ├── public/
 │   └── images/
+│       └── covers/        ← portadas de libros
 ├── src/
 │   ├── components/
+│   │   ├── BookCard.astro
+│   │   ├── TagBadge.astro
+│   │   └── Ticker.astro
 │   ├── content/
-│   │   └── blog/
+│   │   ├── lecturas/      ← reseñas de libros (.md)
+│   │   └── notas/         ← reflexiones libres (.md)
 │   ├── layouts/
+│   │   └── BaseLayout.astro
 │   ├── pages/
 │   │   ├── index.astro
-│   │   └── blog/
-│   │       └── index.astro
+│   │   ├── lecturas.astro
+│   │   ├── notas.astro
+│   │   ├── archivo.astro
+│   │   ├── sobre-mi.astro
+│   │   ├── suscripcion.astro
+│   │   ├── terminos.astro
+│   │   ├── lecturas/
+│   │   │   └── [slug].astro
+│   │   └── notas/
+│   │       └── [slug].astro
 │   └── styles/
 │       └── global.css
-├── README.md
-├── LICENSE
-└── CONTENT-LICENSE.md
+├── src/content.config.ts  ← schema de Content Collections
+├── astro.config.mjs
+└── README.md
+```
+
+---
+
+## Frontmatter de una lectura
+
+```yaml
+---
+title: "Título del libro"
+author: "Nombre del autor"
+genre: ficcion # ficcion | ensayo | poesia | filosofia | historia | otro
+coverImage: "/images/covers/nombre.jpg" # opcional
+rating: 4 # 1-5, opcional
+date: 2026-03-20T12:00:00 # fecha de publicación de la reseña
+readTime: "10 min"
+excerpt: "Una línea que aparece en la card."
+readYear: 2023 # opcional — año en que se leyó, si difiere del año de publicación
+year: 1985 # año de publicación del libro, opcional
+publisher: "Editorial" # opcional
+---
+```
+
+## Frontmatter de una nota
+
+```yaml
+---
+title: "Título de la nota"
+date: 2026-03-20T12:00:00
+readTime: "4 min"
+excerpt: "Una línea que resume la nota."
+---
 ```
 
 ---
@@ -61,4 +111,11 @@ personalBlog/
 ```bash
 npm install
 npm run dev
+```
+
+Visita `http://localhost:4321` en tu navegador.
+
+```bash
+npm run build
+npm run preview
 ```

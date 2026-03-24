@@ -1,0 +1,224 @@
+/* ═══════════════════════════════════════
+   RESPONSIVE — miranda.lecturas
+   768px = tablet · 480px = móvil
+═══════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+  /* ── INDEX: HERO ── */
+  .hero {
+    grid-template-columns: 1fr !important;
+    min-height: auto !important;
+  }
+
+  .hero-left {
+    border-right: none !important;
+    border-bottom: var(--border) !important;
+    padding: 2.5rem 1.5rem !important;
+  }
+
+  .hero-right {
+    display: none !important;
+  }
+
+  .hero-tags {
+    margin-top: 1.5rem !important;
+  }
+
+  /* ── INDEX: ABOUT STRIP ── */
+  .about-strip {
+    grid-template-columns: 1fr !important;
+  }
+
+  .about-left {
+    border-right: none !important;
+    border-bottom: 1.5px solid rgba(237,232,223,0.2) !important;
+    padding: 2.5rem 1.5rem !important;
+  }
+
+  .about-right {
+    padding: 2.5rem 1.5rem !important;
+  }
+
+  .stats-grid {
+    gap: 1.5rem !important;
+  }
+
+  /* ── INDEX: QUOTE ── */
+  .quote-section {
+    padding: 3.5rem 1.5rem !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+  }
+
+  .quote-mark {
+    font-size: 5rem !important;
+    margin-bottom: -0.5rem !important;
+  }
+
+  /* ── INDEX: BOOKS GRID ── */
+  .section {
+    padding: 3rem 1.5rem !important;
+  }
+
+  .books-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── PAGE HEADERS (lecturas, notas, archivo, suscripcion, terminos) ── */
+  .page-header {
+    grid-template-columns: 1fr !important;
+    padding: 2.5rem 1.5rem 2rem !important;
+    gap: 1.2rem !important;
+  }
+
+  /* ── LECTURAS: GRID ── */
+  .filters {
+    padding: 1rem 1.5rem !important;
+  }
+
+  /* ── LECTURAS: SLUG HERO ── */
+  .book-hero {
+    grid-template-columns: 1fr !important;
+    padding: 2.5rem 1.5rem !important;
+  }
+
+  .book-hero .hero-left {
+    border-right: none !important;
+    border-bottom: var(--border) !important;
+    padding-right: 0 !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .book-hero .hero-right {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: 1.5rem !important;
+    padding: 0 !important;
+  }
+
+  .review {
+    padding: 3rem 1.5rem !important;
+    max-width: 100% !important;
+  }
+
+  .post-nav {
+    padding: 1.5rem !important;
+  }
+
+  /* ── NOTAS: LISTA ── */
+  .nota-link {
+    grid-template-columns: 2rem 1fr !important;
+    padding: 1.5rem !important;
+    gap: 1rem !important;
+  }
+
+  .nota-meta { display: none !important; }
+
+  /* ── NOTAS: SLUG ── */
+  .nota-header {
+    padding: 2.5rem 1.5rem 2rem !important;
+    max-width: 100% !important;
+  }
+
+  .nota-body {
+    padding: 3rem 1.5rem !important;
+    max-width: 100% !important;
+  }
+
+  /* ── ARCHIVO ── */
+  .year-header {
+    padding: 1.2rem 1.5rem 0.6rem !important;
+    top: 52px !important;
+  }
+
+  .entry-link {
+    grid-template-columns: 2rem 1fr 1.5rem !important;
+    padding: 1.2rem 1.5rem !important;
+    gap: 0.75rem !important;
+  }
+
+  .entry-right { display: none !important; }
+
+  /* ── SOBRE MI ── */
+  .gallery {
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: auto !important;
+  }
+
+  .img-tall,
+  .gallery > div:last-child {
+    grid-row: auto !important;
+  }
+
+  .img-wide {
+    grid-column: span 2 !important;
+  }
+
+  /* ── SUSCRIPCION ── */
+  .subscribe-wrap {
+    grid-template-columns: 1fr !important;
+  }
+
+  .subscribe-left {
+    border-right: none !important;
+    border-bottom: var(--border) !important;
+    padding: 2.5rem 1.5rem !important;
+  }
+
+  .subscribe-right {
+    padding: 2.5rem 1.5rem !important;
+  }
+
+  .form-row {
+    flex-direction: column !important;
+  }
+
+  .form-input {
+    border-right: var(--border) !important;
+    border-bottom: none !important;
+  }
+
+  .form-btn {
+    width: 100% !important;
+  }
+
+  /* ── TERMINOS ── */
+  .content {
+    padding: 3rem 1.5rem !important;
+  }
+
+  .license-grid {
+    padding: 1.2rem !important;
+  }
+}
+
+/* ═══════════════════════════
+   MÓVIL PEQUEÑO (≤ 480px)
+═══════════════════════════ */
+@media (max-width: 480px) {
+
+  .page-title,
+  .hero-title,
+  .nota-title {
+    font-size: 2.2rem !important;
+    line-height: 1.05 !important;
+  }
+
+  .book-title {
+    font-size: 1.8rem !important;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr !important;
+  }
+
+  .img-wide {
+    grid-column: span 1 !important;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}

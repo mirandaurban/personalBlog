@@ -1,0 +1,47 @@
+---
+interface Props {
+  genre: 'ficcion' | 'ensayo' | 'poesia' | 'filosofia' | 'historia' | 'otro';
+  label?: string;
+}
+
+const { genre, label } = Astro.props;
+
+const config = {
+  ficcion:   { bg: 'var(--purple)',   color: 'var(--ink)',   text: label ?? 'Ficción' },
+  ensayo:    { bg: 'var(--lavender)', color: 'var(--ink)',   text: label ?? 'Ensayo' },
+  poesia:    { bg: 'var(--blush)',    color: 'var(--ink)',   text: label ?? 'Poesía' },
+  filosofia: { bg: 'var(--sage)',     color: 'var(--ink)',   text: label ?? 'Filosofía' },
+  historia:  { bg: 'var(--butter)',   color: 'var(--ink)',   text: label ?? 'Historia' },
+  otro:      { bg: 'var(--cream)',    color: 'var(--ink)',   text: label ?? 'Otro' },
+};
+
+const c = config[genre];
+---
+
+<span class="tag" style={`background:${c.bg}; color:${c.color};`}>
+  {c.text}
+</span>
+
+<style>
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border: 1.5px solid var(--ink);
+    cursor: default;
+    transition: transform 0.15s, box-shadow 0.15s;
+    white-space: nowrap;
+  }
+
+  .tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 2px 2px 0 var(--ink);
+  }
+
+</style>

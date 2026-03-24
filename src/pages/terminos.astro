@@ -1,0 +1,381 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const lastUpdated = new Date('2026-03-20T12:00:00').toLocaleDateString('es-MX', {
+  year: 'numeric', month: 'long', day: 'numeric'
+});
+---
+
+<BaseLayout
+  title="Términos y condiciones — Miranda Urban"
+  description="Aviso legal, uso del contenido y alcance de las opiniones publicadas en este blog."
+>
+
+  <section class="page-header">
+    <div class="header-left">
+      <p class="eyebrow">✦ Aviso legal</p>
+      <h1 class="page-title">Términos y<br/>condiciones</h1>
+    </div>
+    <div class="header-right">
+      <p class="header-desc">
+        Este blog es un espacio personal. Antes de seguir leyendo,
+        te pido que conozcas el alcance de lo que aquí se publica.
+      </p>
+      <p class="updated">Última actualización: {lastUpdated}</p>
+    </div>
+  </section>
+
+  <div class="content">
+
+    <article class="terms-body">
+
+      <section class="term-block">
+        <h2>1. Naturaleza del contenido</h2>
+        <p>
+          Todo lo publicado en este blog — reseñas, notas, reflexiones y cualquier otro texto —
+          representa exclusivamente mi opinión personal como lectora. No soy crítica literaria
+          profesional, académica ni portavoz de ninguna institución editorial.
+        </p>
+        <p>
+          Mis opiniones son el resultado de mi experiencia de lectura particular, en un momento
+          dado, desde mi perspectiva. Dos personas pueden leer el mismo libro y llegar a
+          conclusiones completamente distintas, y eso está bien.
+        </p>
+      </section>
+
+      <section class="term-block">
+        <h2>2. Sin intención de daño</h2>
+        <p>
+          Nada de lo publicado aquí tiene la intención de perjudicar, atacar o denigrar
+          a autores, editoriales, traductores u otras personas involucradas en la creación
+          de los libros que reseño.
+        </p>
+        <p>
+          Cuando una reseña es crítica, lo es desde el respeto. Escribo sobre los libros,
+          no sobre las personas detrás de ellos. Si en algún momento algo de lo publicado
+          te genera una preocupación legítima, puedes contactarme directamente.
+        </p>
+      </section>
+
+      <section class="term-block">
+        <h2>3. Propiedad intelectual y licencia</h2>
+        <p>
+          Todo el contenido original de este blog — textos, estructura editorial y forma
+          de expresión — está protegido bajo la licencia
+          <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">
+            Creative Commons BY-NC-ND 4.0
+          </a>.
+        </p>
+
+        <div class="license-grid">
+          <div class="license-item">
+            <span class="license-icon">BY</span>
+            <div>
+              <p class="license-title">Atribución</p>
+              <p class="license-desc">Si compartes algo de este blog, debes darme crédito como autora de forma visible y clara.</p>
+            </div>
+          </div>
+          <div class="license-item">
+            <span class="license-icon">NC</span>
+            <div>
+              <p class="license-title">No comercial</p>
+              <p class="license-desc">No puedes usar mi contenido para fines comerciales: venderlo, incluirlo en productos de pago, usarlo en publicidad o monetizarlo de ninguna forma.</p>
+            </div>
+          </div>
+          <div class="license-item">
+            <span class="license-icon">ND</span>
+            <div>
+              <p class="license-title">Sin derivadas</p>
+              <p class="license-desc">No puedes modificar, transformar ni adaptar mis textos para crear contenido derivado. Mis palabras son mías tal como las escribí.</p>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          Esto aplica a todos los textos del blog. Las portadas de libros que aparecen
+          son propiedad de sus respectivas editoriales y se usan únicamente con fines
+          ilustrativos en el contexto de una reseña, lo que constituye uso referencial.
+        </p>
+      </section>
+
+      <section class="term-block">
+        <h2>4. Lo que sí puedes hacer</h2>
+        <p>Puedes leer, guardar para uso personal, recomendar el blog a otras personas y compartir el enlace a cualquier entrada con atribución. Me alegra que el contenido te sea útil.</p>
+      </section>
+
+      <section class="term-block">
+        <h2>5. Lo que no puedes hacer</h2>
+        <p>Queda prohibido reproducir total o parcialmente mis textos sin permiso escrito, publicarlos en otros medios como si fueran propios, entrenar modelos de inteligencia artificial con este contenido, o usarlo con cualquier fin comercial.</p>
+      </section>
+
+      <section class="term-block">
+        <h2>6. Sin garantías</h2>
+        <p>
+          Las opiniones aquí expresadas no constituyen asesoramiento de ningún tipo.
+          No me responsabilizo de las decisiones que alguien pueda tomar basándose
+          en mis reseñas — si un libro no te gustó después de leer mi recomendación,
+          lo lamento, pero es parte del riesgo de leer.
+        </p>
+      </section>
+
+      <section class="term-block">
+        <h2>7. Cambios a estos términos</h2>
+        <p>
+          Puedo actualizar esta página cuando lo considere necesario. La fecha de
+          última actualización siempre estará visible al inicio de esta sección.
+        </p>
+      </section>
+
+      <div class="closing">
+        <p>
+          Si tienes dudas o quieres hablar sobre algún contenido específico,
+          puedes escribirme. Este blog existe porque me gusta compartir lo que leo —
+          y quiero que ese espacio se mantenga honesto y respetuoso para todos.
+        </p>
+        <p class="closing-sig">— Miranda Urban Solano</p>
+      </div>
+
+    </article>
+
+  </div>
+
+</BaseLayout>
+
+<style>
+  .page-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 5rem 3rem 3rem;
+    gap: 4rem;
+    align-items: end;
+    border-bottom: var(--border);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .page-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 5vw, 5rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+  }
+
+  .header-desc {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    font-weight: 300;
+    max-width: 40ch;
+    margin-bottom: 1.5rem;
+  }
+
+  .updated {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(44,44,42,0.35);
+  }
+
+  /* ── CONTENIDO ── */
+  .content {
+    padding: 5rem 3rem;
+  }
+
+  .terms-body {
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .term-block h2 {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(44,44,42,0.1);
+  }
+
+  .term-block p {
+    font-size: 0.98rem;
+    line-height: 1.8;
+    font-weight: 300;
+    color: rgba(44,44,42,0.85);
+    margin-bottom: 0.8rem;
+  }
+
+  .term-block p:last-child { margin-bottom: 0; }
+
+  .term-block a {
+    color: var(--rust);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rust);
+    padding-bottom: 0.05rem;
+    transition: opacity 0.2s;
+  }
+
+  .term-block a:hover { opacity: 0.7; }
+
+  /* ── LICENCIA GRID ── */
+  .license-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    background: rgba(44,44,42,0.03);
+    border-left: 3px solid var(--rust);
+  }
+
+  .license-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .license-icon {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    background: var(--ink);
+    color: var(--cream);
+    padding: 0.25rem 0.45rem;
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .license-title {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink);
+    margin-bottom: 0.3rem !important;
+  }
+
+  .license-desc {
+    font-size: 0.88rem !important;
+    color: rgba(44,44,42,0.7) !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* ── CIERRE ── */
+  .closing {
+    padding-top: 2rem;
+    border-top: var(--border);
+  }
+
+  .closing p {
+    font-size: 0.98rem;
+    line-height: 1.8;
+    font-weight: 300;
+    color: rgba(44,44,42,0.75);
+    margin-bottom: 1rem;
+  }
+
+  .closing-sig {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.1rem !important;
+    color: var(--ink) !important;
+    font-weight: 400 !important;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .eyebrow     { animation: fadeUp 0.5s ease both; }
+  .page-title  { animation: fadeUp 0.5s ease 0.08s both; }
+  .header-desc { animation: fadeUp 0.5s ease 0.16s both; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .page-header {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding: 4rem 2rem 2.5rem;
+    }
+
+    .header-left,
+    .header-right {
+      order: 0;
+    }
+
+    .content {
+      padding: 4rem 2rem;
+    }
+
+    .terms-body {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .page-header {
+      padding: 3rem 1.5rem 2rem;
+    }
+
+    .content {
+      padding: 3rem 1.5rem 4rem;
+    }
+
+    .page-title {
+      font-size: clamp(2.4rem, 8vw, 4.2rem);
+    }
+
+    .header-desc {
+      font-size: 1rem;
+      max-width: 100%;
+    }
+
+    .term-block h2 {
+      font-size: 1.2rem;
+    }
+
+    .term-block p,
+    .license-desc {
+      font-size: 0.96rem;
+      line-height: 1.75;
+    }
+
+    .license-grid {
+      padding: 1.25rem;
+      gap: 1.25rem;
+    }
+
+    .license-item {
+      gap: 0.9rem;
+    }
+
+    .closing p {
+      font-size: 0.96rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .content {
+      padding: 2.5rem 1.25rem 3.5rem;
+    }
+
+    .license-grid {
+      padding: 1rem;
+    }
+  }
+</style>

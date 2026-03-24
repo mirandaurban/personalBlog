@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Mono:wght@300;400&display=swap');
+
+:root {
+  /* Base */
+  --cream:     #EDE8DF;
+  --ink:       #2C2C2A;
+
+  /* Acento principal — azul pizarra */
+  --rust:      #4A6278;
+
+  /* Tags */
+  --sage:      #7fad8e;   
+  --butter:    #E8C547;   
+  --lavender:  #8FA8C8; 
+  --purple:    #a491cb;
+  --blush:     #f2b5c8;  
+  --teal:      #3D7D72;
+
+  /* Otros colores */
+  --paleblue:  #b0c6e3;
+  --palegreen: #9bc4b2;
+  
+  /* UI de soporte */
+  --muted:     #C8C0B4;   /* bordes y metadatos */
+  --paper:     #F7F4EE;   /* fondo de cards y scrap */
+
+  --font-display: 'Playfair Display', serif;
+  --font-body:    'Fraunces', serif;
+  --font-mono:    'DM Mono', monospace;
+
+  --border: 1.5px solid var(--ink);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+/* Noise texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.4;
+}
+
+a { color: inherit; }
+
+img { display: block; max-width: 100%; }

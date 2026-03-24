@@ -1,0 +1,269 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TagBadge from '../components/TagBadge.astro';
+
+const allLecturas = await getCollection('lecturas');
+const allNotas    = await getCollection('notas');
+
+const entries = [
+  ...allLecturas.map(e => ({
+    type:     'lectura' as const,
+    title:    e.data.title,
+    author:   e.data.author,
+    genre:    e.data.genre,
+    date:     e.data.date,
+    readYear: e.data.readYear,
+    slug:     `/lecturas/${e.id}`,
+    year:     e.data.date.getFullYear(),
+  })),
+  ...allNotas.map(e => ({
+    type:     'nota' as const,
+    title:    e.data.title,
+    author:   null,
+    genre:    null,
+    date:     e.data.date,
+    readYear: undefined,
+    slug:     `/notas/${e.id}`,
+    year:     e.data.date.getFullYear(),
+  })),
+].sort((a, b) => b.date.getTime() - a.date.getTime());
+
+const byYear = entries.reduce((acc, entry) => {
+  if (!acc[entry.year]) acc[entry.year] = [];
+  acc[entry.year].push(entry);
+  return acc;
+}, {} as Record<number, typeof entries>);
+
+const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
+---
+
+<BaseLayout
+  title="Archivo — Miranda Urban"
+  description="Todo lo que he escrito, ordenado por año."
+>
+
+  <section class="page-header">
+    <div class="header-left">
+      <p class="eyebrow">✦ Todo en un lugar</p>
+      <h1 class="page-title">Archivo</h1>
+    </div>
+    <div class="header-right">
+      <p class="header-desc">
+        Lecturas y notas en orden cronológico. Un registro de lo que he leído,
+        pensado y escrito desde que empecé este blog.
+      </p>
+      <p class="counter">{entries.length} entradas · {years.length} {years.length === 1 ? 'año' : 'años'}</p>
+    </div>
+  </section>
+
+  {years.map(year => (
+    <section class="year-section">
+      <div class="year-header">
+        <h2 class="year-label">{year}</h2>
+        <span class="year-count">{byYear[year].length} entradas</span>
+      </div>
+      <ol class="entries-list">
+        {byYear[year].map(entry => (
+          <li class="entry-item">
+            <a href={entry.slug} class="entry-link">
+              <span class="entry-type">{entry.type === 'lectura' ? '📖' : '✏️'}</span>
+              <div class="entry-body">
+                <span class="entry-title">{entry.title}</span>
+                {entry.author && <span class="entry-author">— {entry.author}</span>}
+                {entry.readYear && entry.readYear !== entry.year && (
+                  <span class="entry-readyear">leído en {entry.readYear}</span>
+                )}
+              </div>
+              <div class="entry-right">
+                {entry.genre && <TagBadge genre={entry.genre} />}
+                <span class="entry-date">
+                  {entry.date.toLocaleDateString('es-MX', { month: 'long', year: 'numeric' })}
+                </span>
+              </div>
+              <span class="entry-arrow">↗</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </section>
+  ))}
+
+</BaseLayout>
+
+<style>
+  .page-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 5rem 3rem 3rem;
+    gap: 4rem;
+    align-items: end;
+    border-bottom: var(--border);
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .page-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 6vw, 6.5rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+  }
+  .header-desc {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    font-weight: 300;
+    max-width: 40ch;
+    margin-bottom: 2rem;
+  }
+  .counter {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(44,44,42,0.4);
+  }
+  .year-section { border-bottom: var(--border); }
+  .year-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 2rem 3rem 0.75rem;
+    border-bottom: var(--border);
+    background: var(--cream);
+    position: sticky;
+    top: 57px;
+    z-index: 10;
+  }
+  .year-label {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .year-count {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(44,44,42,0.35);
+  }
+  .entries-list { list-style: none; }
+  .entry-item { border-bottom: 1px solid rgba(44,44,42,0.1); }
+  .entry-item:last-child { border-bottom: none; }
+  .entry-link {
+    display: grid;
+    grid-template-columns: 2rem 1fr auto 1.5rem;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1.4rem 3rem;
+    text-decoration: none;
+    color: var(--ink);
+    transition: background 0.2s;
+  }
+  .entry-link:hover { background: var(--ink); color: var(--cream); }
+  .entry-type { font-size: 0.9rem; opacity: 0.6; transition: opacity 0.2s; }
+  .entry-link:hover .entry-type { opacity: 0.8; }
+  .entry-body {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .entry-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .entry-author {
+    font-size: 0.85rem;
+    font-weight: 300;
+    font-style: italic;
+    opacity: 0.55;
+  }
+  .entry-readyear {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--rust);
+    opacity: 0.8;
+    border: 1px solid var(--rust);
+    border-radius: 999px;
+    padding: 0.1rem 0.5rem;
+  }
+  .entry-link:hover .entry-readyear {
+    color: var(--blush);
+    border-color: var(--blush);
+    opacity: 0.9;
+  }
+  .entry-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0;
+  }
+  .entry-right :global(.tag) { font-size: 0.58rem; padding: 0.25rem 0.65rem; }
+  .entry-date {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.35;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+  .entry-link:hover .entry-date { opacity: 0.5; }
+  .entry-arrow {
+    font-size: 1rem;
+    opacity: 0.2;
+    transition: opacity 0.2s, transform 0.2s;
+    justify-self: end;
+  }
+  .entry-link:hover .entry-arrow { opacity: 1; transform: translate(3px, -3px); }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .eyebrow     { animation: fadeUp 0.5s ease both; }
+  .page-title  { animation: fadeUp 0.5s ease 0.08s both; }
+  .header-desc { animation: fadeUp 0.5s ease 0.16s both; }
+
+  /* ── RESPONSIVE ── */
+
+  @media (max-width: 1024px) {
+    .page-header {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding: 4rem 2rem 2.5rem;
+    }
+
+    .header-left,
+    .header-right {
+      order: 0;
+    }
+
+    .counter {
+      margin-top: 1.5rem;
+      order: 3;               
+    }
+  }
+
+  @media (max-width: 640px) {
+    .page-header {
+      padding: 3rem 1.5rem 2rem;
+    }
+    .header-desc {
+      margin-bottom: 1rem;
+    }
+  }
+</style>
