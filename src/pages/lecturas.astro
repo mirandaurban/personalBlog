@@ -17,9 +17,16 @@ const spineColors: Record<string, string> = {
   filosofia: 'var(--sage)',
   historia:  'var(--butter)',
   otro:      'var(--muted)',
+  ciencia:        'var(--teal)',
+  arte:           'var(--terracota)',
+  politica:       'var(--slate)',
+  espiritualidad: 'var(--mauve)',
+  clasicos:       'var(--sand)',
+  tecnologia:     'var(--electric)',
 };
 
-const genres = ['ficcion', 'ensayo', 'poesia', 'filosofia', 'historia'] as const;
+const genres = ['ficcion', 'ensayo', 'poesia', 'filosofia', 'historia',
+                'ciencia', 'arte', 'politica', 'espiritualidad', 'clasicos', 'tecnologia'] as const;
 ---
 
 <BaseLayout
@@ -47,7 +54,7 @@ const genres = ['ficcion', 'ensayo', 'poesia', 'filosofia', 'historia'] as const
       <button class="filter-btn active" data-genre="all">Todos</button>
       {genres.map(g => (
         <button class="filter-btn" data-genre={g}>
-          <TagBadge genre={g} />
+          <TagBadge genres={[g]} />  
         </button>
       ))}
     </div>
@@ -55,7 +62,7 @@ const genres = ['ficcion', 'ensayo', 'poesia', 'filosofia', 'historia'] as const
 
   <div class="books-grid">
     {books.map((book) => (
-      <div class="book-wrap" data-genre={book.data.genre}>
+      <div class="book-wrap" data-genres={JSON.stringify(book.data.genre)}>
         <BookCard
           title={book.data.title}
           author={book.data.author}
@@ -65,7 +72,7 @@ const genres = ['ficcion', 'ensayo', 'poesia', 'filosofia', 'historia'] as const
           readYear={book.data.readYear}
           readTime={book.data.readTime}
           slug={book.id}
-          spineColor={spineColors[book.data.genre]}
+          spineColor={spineColors[book.data.genre[0]]}
           coverImage={book.data.coverImage}
         />
       </div>
@@ -210,13 +217,20 @@ const genres = ['ficcion', 'ensayo', 'poesia', 'filosofia', 'historia'] as const
 <script>
   const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
   const cards   = document.querySelectorAll<HTMLElement>('.book-wrap');
+
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
       buttons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const genre = btn.dataset.genre;
+
       cards.forEach(card => {
-        if (genre === 'all' || card.dataset.genre === genre) {
+        if (genre === 'all') {
+          card.classList.remove('hidden');
+          return;
+        }
+        const cardGenres: string[] = JSON.parse(card.dataset.genres ?? '[]');
+        if (cardGenres.includes(genre!)) {
           card.classList.remove('hidden');
         } else {
           card.classList.add('hidden');

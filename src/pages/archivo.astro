@@ -67,7 +67,7 @@ const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
         {byYear[year].map(entry => (
           <li class="entry-item">
             <a href={entry.slug} class="entry-link">
-              <span class="entry-type">{entry.type === 'lectura' ? '📖' : '✏️'}</span>
+              <span class="entry-type">{entry.type === 'lectura' ? '📖' : '✒️'}</span>
               <div class="entry-body">
                 <span class="entry-title">{entry.title}</span>
                 {entry.author && <span class="entry-author">— {entry.author}</span>}
@@ -76,7 +76,7 @@ const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
                 )}
               </div>
               <div class="entry-right">
-                {entry.genre && <TagBadge genre={entry.genre} />}
+                {entry.genre && <TagBadge genres={entry.genre} />}
                 <span class="entry-date">
                   {entry.date.toLocaleDateString('es-MX', { month: 'long', year: 'numeric' })}
                 </span>

@@ -6,7 +6,10 @@ const lecturas = defineCollection({
   schema: z.object({
     title:      z.string(),
     author:     z.string(),
-    genre:      z.enum(['ficcion', 'ensayo', 'poesia', 'filosofia', 'historia', 'otro']),
+   genre: z.array(
+      z.enum(['ficcion', 'ensayo', 'poesia', 'filosofia', 'historia', 'otro',
+              'ciencia', 'arte', 'politica', 'espiritualidad', 'clasicos', 'tecnologia'])
+    ),
     coverImage: z.string().optional(),
     rating:     z.number().min(1).max(5).optional(),
     date:       z.date(),

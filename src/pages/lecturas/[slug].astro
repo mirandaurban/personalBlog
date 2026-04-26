@@ -24,6 +24,12 @@ const spineColors: Record<string, string> = {
   filosofia: 'var(--sage)',
   historia:  'var(--butter)',
   otro:      'var(--muted)',
+  ciencia:   'var(--cream)',
+  arte:      'var(--terracota)',
+  politica:  'var(--slate)', 
+  espiritualidad:'var(--mauve)',
+  clasicos:  'var(--sand)',
+  tecnologia:'var(--electric)', 
 };
 ---
 
@@ -39,7 +45,7 @@ const spineColors: Record<string, string> = {
       <h1 class="book-title">{title}</h1>
       <p class="book-author">{author}</p>
       <div class="meta-row">
-        <TagBadge genre={genre} />
+        <TagBadge genres={genre} />
         {rating && (
           <span class="rating" aria-label={`${rating} de 5`}>
             {'★'.repeat(rating)}{'☆'.repeat(5 - rating)}

@@ -5,7 +5,8 @@ interface Props {
   title: string;
   author: string;
   excerpt: string;
-  genre: 'ficcion' | 'ensayo' | 'poesia' | 'filosofia' | 'historia' | 'otro';
+  genre: ('ficcion' | 'ensayo' | 'poesia' | 'filosofia' | 'historia' | 'otro'
+      | 'ciencia' | 'arte' | 'politica' | 'espiritualidad' | 'clasicos' | 'tecnologia')[];
   date: string;
   readTime: string;
   slug: string;
@@ -38,7 +39,9 @@ const {
       {title}
     </div>
   )}
-  <TagBadge genre={genre} />
+  <div class="book-tags">
+    <TagBadge genres={genre} />
+  </div>
   <h3 class="book-title">{title}</h3>
   <p class="book-author">{author}</p>
   <p class="book-excerpt">{excerpt}</p>
@@ -164,5 +167,11 @@ const {
   .book-card:hover .read-arrow {
     opacity: 1;
     transform: translate(3px, -3px);
+  }
+
+  .book-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
   }
 </style>

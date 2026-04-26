@@ -1,26 +1,38 @@
 ---
+type Genre = 'ficcion' | 'ensayo' | 'poesia' | 'filosofia' | 'historia' | 'otro'
+           | 'ciencia' | 'arte' | 'politica' | 'espiritualidad' | 'clasicos' | 'tecnologia';
+
 interface Props {
-  genre: 'ficcion' | 'ensayo' | 'poesia' | 'filosofia' | 'historia' | 'otro';
+  genres: Genre | Genre[];
   label?: string;
 }
 
-const { genre, label } = Astro.props;
+const { genres, label } = Astro.props; 
 
-const config = {
-  ficcion:   { bg: 'var(--purple)',   color: 'var(--ink)',   text: label ?? 'Ficción' },
-  ensayo:    { bg: 'var(--lavender)', color: 'var(--ink)',   text: label ?? 'Ensayo' },
-  poesia:    { bg: 'var(--blush)',    color: 'var(--ink)',   text: label ?? 'Poesía' },
-  filosofia: { bg: 'var(--sage)',     color: 'var(--ink)',   text: label ?? 'Filosofía' },
-  historia:  { bg: 'var(--butter)',   color: 'var(--ink)',   text: label ?? 'Historia' },
-  otro:      { bg: 'var(--cream)',    color: 'var(--ink)',   text: label ?? 'Otro' },
+const config: Record<Genre, { bg: string; color: string; text: string }> = {
+  ficcion:   { bg: 'var(--purple)',   color: 'var(--ink)', text: 'Ficción' },
+  ensayo:    { bg: 'var(--lavender)', color: 'var(--ink)', text: 'Ensayo' },
+  poesia:    { bg: 'var(--blush)',    color: 'var(--ink)', text: 'Poesía' },
+  filosofia: { bg: 'var(--sage)',     color: 'var(--ink)', text: 'Filosofía' },
+  historia:  { bg: 'var(--butter)',   color: 'var(--ink)', text: 'Historia' },
+  otro:      { bg: 'var(--cream)',    color: 'var(--ink)', text: 'Otro' },
+  ciencia:       { bg: 'var(--teal)',     color: 'var(--cream)', text: 'Ciencia' },
+  arte:           { bg: 'var(--terracota)', color: 'var(--cream)', text: 'Arte & Diseño' },
+  politica:       { bg: 'var(--slate)',     color: 'var(--cream)', text: 'Política' },
+  espiritualidad: { bg: 'var(--mauve)',     color: 'var(--ink)',   text: 'Espiritualidad' },
+  clasicos:       { bg: 'var(--sand)',      color: 'var(--ink)',   text: 'Clásicos' },
+  tecnologia: { bg: 'var(--electric)', color: 'var(--cream)', text: 'Tecnología' },
 };
 
-const c = config[genre];
+const list = Array.isArray(genres) ? genres : [genres];
+const tags = list.map((g) => ({ ...config[g], key: g }));
 ---
 
-<span class="tag" style={`background:${c.bg}; color:${c.color};`}>
-  {c.text}
-</span>
+{tags.map((c) => (
+  <span class="tag" style={`background:${c.bg}; color:${c.color};`}>
+    {label ?? c.text}
+  </span>
+))}
 
 <style>
   .tag {
@@ -38,10 +50,8 @@ const c = config[genre];
     transition: transform 0.15s, box-shadow 0.15s;
     white-space: nowrap;
   }
-
   .tag:hover {
     transform: translateY(-2px);
     box-shadow: 2px 2px 0 var(--ink);
   }
-
 </style>
